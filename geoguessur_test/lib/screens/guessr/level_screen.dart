@@ -9,11 +9,33 @@ class LevelScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('level')),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/guessr/level/quiz');
-          },
-          child: const Text('Go To quiz'),
+        child: Column(
+          children: [
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  context.go('/guessr/level/1/quiz');
+                },
+                child: const Text('Go To quiz'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  context.go('/guessr/level/2/quiz');
+                },
+                child: const Text('Go To quiz'),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  context.go('/guessr/level/3/quiz');
+                },
+                child: const Text('Go To quiz'),
+              ),
+            ),
+          ],
         ),
       ),
     );

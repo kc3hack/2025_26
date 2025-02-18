@@ -37,8 +37,11 @@ final router = GoRouter(
           routes: [
             GoRoute(
               name: 'quiz',
-              path: '/quiz',
-              builder: (context, state) => QuizScreen(),
+              path: '/:level/quiz',
+              builder:
+                  (context, state) => QuizScreen(
+                    level: int.parse(state.pathParameters['level']!),
+                  ),
             ),
           ],
           builder: (context, state) => LevelScreen(),
