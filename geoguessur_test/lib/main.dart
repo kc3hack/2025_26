@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geoguessur_test/routing/router.dart';
-
+import 'package:geoguessur_test/route/router.dart';
 
 void main() {
   runApp(const MyApp());
