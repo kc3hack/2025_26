@@ -16,7 +16,7 @@ class LevelScreen extends StatelessWidget {
                 onPressed: () {
                   context.go('/guessr/level/1/quiz');
                 },
-                child: const Text('Go To quiz'),
+                child: const Text('Go To quiz level 1'),
               ),
             ),
             Center(
@@ -24,7 +24,7 @@ class LevelScreen extends StatelessWidget {
                 onPressed: () {
                   context.go('/guessr/level/2/quiz');
                 },
-                child: const Text('Go To quiz'),
+                child: const Text('Go To quiz level 2'),
               ),
             ),
             Center(
@@ -32,7 +32,7 @@ class LevelScreen extends StatelessWidget {
                 onPressed: () {
                   context.go('/guessr/level/3/quiz');
                 },
-                child: const Text('Go To quiz'),
+                child: const Text('Go To quiz level 3'),
               ),
             ),
           ],
