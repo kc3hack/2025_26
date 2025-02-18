@@ -11,7 +11,7 @@ class LevelScreen extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            context.go('/quiz');
+            context.go('/guessr/level/quiz');
           },
           child: const Text('Go To quiz'),
         ),

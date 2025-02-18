@@ -28,8 +28,8 @@ final router = GoRouter(
       builder: (context, state) => const ListScreen(),
     ),
     GoRoute(
-      name: 'guessur',
-      path: '/guessur',
+      name: 'guessr',
+      path: '/guessr',
       routes: [
         GoRoute(
           name: 'level',
