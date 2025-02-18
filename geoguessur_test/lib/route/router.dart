@@ -1,7 +1,7 @@
-import 'package:geoguessur_test/screens/about_screen.dart';
-import 'package:geoguessur_test/screens/detail_screen.dart';
-import 'package:geoguessur_test/screens/home_screen.dart';
-import 'package:geoguessur_test/screens/setting_screen.dart';
+import 'package:geoguessur_test/screens/list/list_screen.dart';
+import 'package:geoguessur_test/screens/home/detail_screen.dart';
+import 'package:geoguessur_test/screens/home/home_screen.dart';
+import 'package:geoguessur_test/screens/guessr/guessr_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -14,27 +14,34 @@ final router = GoRouter(
       routes: [
         GoRoute(
           name: 'detail',
-          path: 'detail/:user_name/:user_id',
-          builder: (context, state) {
-            final userName = state.pathParameters['user_name'];
-            final userId = state.pathParameters['user_id'];
-            return DetailScreen(
-              userName: userName!,
-              userId: int.parse(userId!),
-            );
-          },
+          path: '/detail',
+          builder: (context, state) => DetailScreen(),
         ),
       ],
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      name: 'about',
-      path: '/about',
-      builder: (context, state) => const AboutScreen(),
+      name: 'list',
+      path: '/list',
+      builder: (context, state) => const ListScreen(),
     ),
     GoRoute(
-      name: 'setting',
-      path: '/setting',
+      name: 'guessur',
+      path: '/guessur',
+      routes: [
+        GoRoute(
+          name: 'level',
+          path: '/level',
+          routes: [
+            GoRoute(
+              name: 'quize',
+              path: '/quize',
+              builder: (context, state) => DetailScreen(),
+            ),
+          ],
+          builder: (context, state) => DetailScreen(),
+        ),
+      ],
       builder: (context, state) => const SettingScreen(),
     ),
   ],
