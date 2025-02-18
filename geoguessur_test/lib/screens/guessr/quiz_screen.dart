@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geoguessur_test/utils/get_location.dart';
 import 'package:go_router/go_router.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -11,8 +12,16 @@ class QuizScreen extends StatelessWidget {
       appBar: AppBar(title: Text("quiz level $level")),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            context.go('/');
+          onPressed: () async {
+            try {
+              final position = await getCurrentPosition();
+              context.go('./result', extra: position);
+            } catch (e) {
+              // エラー処理
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('Error: $e')));
+            }
           },
           child: const Text('Go To Home'),
         ),

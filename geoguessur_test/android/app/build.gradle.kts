@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.geoguessur_test"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
@@ -28,6 +29,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
     }
 
     buildTypes {

@@ -1,5 +1,6 @@
 import 'package:geoguessur_test/screens/guessr/level_screen.dart';
 import 'package:geoguessur_test/screens/guessr/quiz_screen.dart';
+import 'package:geoguessur_test/screens/guessr/result_screen.dart';
 import 'package:geoguessur_test/screens/list/list_screen.dart';
 import 'package:geoguessur_test/screens/home/detail_screen.dart';
 import 'package:geoguessur_test/screens/home/home_screen.dart';
@@ -38,6 +39,14 @@ final router = GoRouter(
             GoRoute(
               name: 'quiz',
               path: '/:level/quiz',
+              routes: [
+                GoRoute(
+                  name: 'result',
+                  path: '/result',
+                  builder:
+                      (context, state) => ResultScreen(Location: state.extra),
+                ),
+              ],
               builder:
                   (context, state) => QuizScreen(
                     level: int.parse(state.pathParameters['level']!),
