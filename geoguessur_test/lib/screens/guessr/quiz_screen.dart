@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:geoguessur_test/service/geo_service.dart';
 import 'package:geoguessur_test/utils/location_info/calc_score.dart';
 import 'package:go_router/go_router.dart';
 
 class QuizScreen extends StatelessWidget {
-  const QuizScreen({super.key, required this.level});
+  QuizScreen({super.key, required this.level});
   final int level;
-  final testAdressString = '大阪府大阪市住吉区住吉２丁目９−８９'; //本来DBから取得
+  final GeoService geoService = GeoService();
   final double maxDistance = 50000; // 大阪府の端から端までの長さの半分（メートル）　何度によって変更
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,10 @@ class QuizScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             try {
-              final score = await calculateScore(testAdressString, maxDistance);
+              final place = await geoService.getRandomPlace(level);
+              print(place.name + "," + place.address);
+
+              final score = await calculateScore(place.address, maxDistance);
               context.go('./result', extra: score);
             } catch (e) {
               ScaffoldMessenger.of(
