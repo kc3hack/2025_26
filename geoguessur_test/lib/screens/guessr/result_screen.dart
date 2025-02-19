@@ -21,8 +21,9 @@ class ResultScreen extends StatelessWidget {
               child: const Text('Go To Home'),
             ),
           ),
-          Center(child: Text('Latitude: ${location.latitude.toString()}')),
-          Center(child: Text('Longitude: ${location.longitude.toString()}')),
+          Center(child: Text('adress: ${location}')),
+          // Center(child: Text('Latitude: ${location.latitude.toString()}')),
+          // Center(child: Text('Longitude: ${location.longitude.toString()}')),
         ],
       ),
     );

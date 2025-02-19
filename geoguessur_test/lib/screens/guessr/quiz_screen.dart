@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/utils/get_location.dart';
+import 'package:geoguessur_test/utils/translate_location.dart';
 import 'package:go_router/go_router.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -15,7 +16,8 @@ class QuizScreen extends StatelessWidget {
           onPressed: () async {
             try {
               final location = await getCurrentPosition();
-              context.go('./result', extra: location);
+              final adress = await transLateLocateToAddress(location);
+              context.go('./result', extra: adress);
             } catch (e) {
               // エラー処理
               ScaffoldMessenger.of(
