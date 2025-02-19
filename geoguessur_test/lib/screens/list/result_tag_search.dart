@@ -21,38 +21,43 @@ class ResultTagSearch extends StatelessWidget {
   //仮データ
   static List<Place> places = [
     Place(
-        id: 000,
-        name: '東大寺',
-        address: '奈良県奈良市雑司町406-1',
-        category: '寺',
-        year: ''),
+      id: 000,
+      name: '東大寺',
+      address: '奈良県奈良市雑司町406-1',
+      category: Category.shrine,
+      popularity: 1,
+      year: '',
+    ),
     Place(
-        id: 001,
-        name: '清水寺',
-        address: '京都府京都市東山区清水1丁目294',
-        category: '寺',
-        year: ''),
+      id: 001,
+      name: '清水寺',
+      address: '京都府京都市東山区清水1丁目294',
+      category: Category.temple,
+      popularity: 1,
+      year: '',
+    ),
     Place(
-        id: 002,
-        name: '伊勢神宮',
-        address: '三重県伊勢市宇治館町1番地',
-        category: '神社',
-        year: ''),
+      id: 002,
+      name: '伊勢神宮',
+      address: '三重県伊勢市宇治館町1番地',
+      category: Category.shrine,
+      popularity: 1,
+      year: '',
+    ),
   ];
 
-  Iterable<Place> get resultPlaces => places.where((place) =>
-      (regionTags.any((tag) => place.address.contains(tag)) ||
-          regionTags.isEmpty) &&
-      (categoryTags.any((tag) => place.category.contains(tag)) ||
-          categoryTags.isEmpty) &&
-      (eraTags.any((tag) => place.year.contains(tag)) || eraTags.isEmpty));
+  Iterable<Place> get resultPlaces => places.where(
+    (place) =>
+        (regionTags.any((tag) => place.address.contains(tag)) ||
+            regionTags.isEmpty) &&
+        (categoryTags.contains(place.category) || categoryTags.isEmpty) &&
+        (eraTags.any((tag) => place.year.contains(tag)) || eraTags.isEmpty),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ヘッダー'),
-      ),
+      appBar: AppBar(title: Text('ヘッダー')),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
         child: Column(
@@ -60,17 +65,16 @@ class ResultTagSearch extends StatelessWidget {
             KeyWordSearch(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 25),
-              
+
               child: Text(
                 '${regionTags.join(' ')} ${categoryTags.join(' ')} ${eraTags.join(' ')} の検索結果',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
+                style: TextStyle(fontSize: 14),
               ),
             ),
             Divider(),
             Text(
-                'Result : ${resultPlaces.map((place) => place.name).toString()}')
+              'Result : ${resultPlaces.map((place) => place.name).toString()}',
+            ),
           ],
         ),
       ),
