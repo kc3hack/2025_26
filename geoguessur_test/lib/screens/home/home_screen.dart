@@ -9,11 +9,21 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Home")),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/guessr');
-          },
-          child: const Text("Go To About Screen"),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                context.go('/guessr');
+              },
+              child: const Text("Go To Guessr Screen"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.go('/list');
+              },
+              child: const Text("Go To About Screen"),
+            ),
+          ],
         ),
       ),
     );
