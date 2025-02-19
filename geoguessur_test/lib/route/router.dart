@@ -44,7 +44,7 @@ final router = GoRouter(
                   name: 'result',
                   path: '/result',
                   builder:
-                      (context, state) => ResultScreen(Location: state.extra),
+                      (context, state) => ResultScreen(location: state.extra),
                 ),
               ],
               builder:

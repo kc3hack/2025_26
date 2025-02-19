@@ -14,8 +14,8 @@ class QuizScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             try {
-              final position = await getCurrentPosition();
-              context.go('./result', extra: position);
+              final location = await getCurrentPosition();
+              context.go('./result', extra: location);
             } catch (e) {
               // エラー処理
               ScaffoldMessenger.of(
