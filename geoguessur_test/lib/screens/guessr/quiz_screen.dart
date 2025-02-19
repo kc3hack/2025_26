@@ -18,7 +18,6 @@ class QuizScreen extends StatelessWidget {
               final score = await calculateScore(testAdressString, maxDistance);
               context.go('./result', extra: score);
             } catch (e) {
-              // エラー処理
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Error: $e')));
