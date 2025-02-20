@@ -6,7 +6,7 @@ import 'package:geoguessur_test/screens/home/detail_screen.dart';
 import 'package:geoguessur_test/screens/home/home_screen.dart';
 import 'package:geoguessur_test/screens/guessr/guessr_screen.dart';
 import 'package:geoguessur_test/screens/list/result_tag_search.dart';
-import 'package:geoguessur_test/screens/list/search_page.dart';
+import 'package:geoguessur_test/component/button/search_page.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -44,12 +44,7 @@ final router = GoRouter(
           ),
           //キーワードルート
         ]),
-    //検索画面ルート
-    GoRoute(
-      name: 'search',
-      path: '/search',
-      builder: (context, state) => SearchPage(),
-    ),
+
     //ゲッサールート
     GoRoute(
       name: 'guessr',
