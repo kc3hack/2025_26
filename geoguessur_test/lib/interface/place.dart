@@ -13,6 +13,7 @@ class Place {
     required this.category,
     required this.popularity,
     required this.year,
+    this.imageUrl = 'assets/images/default.jpg',
   });
   /*
     place
@@ -32,4 +33,5 @@ class Place {
   Category category;
   int popularity;
   String year;
+  String imageUrl;
 }

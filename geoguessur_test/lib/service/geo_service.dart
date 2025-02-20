@@ -14,6 +14,7 @@ class GeoService {
         category: Category.shrine,
         popularity: 5,
         year: '211',
+        imageUrl: 'assets/images/sumiyoshi.jpg',
       ),
       Place(
         id: 2,
@@ -46,6 +47,7 @@ class GeoService {
         category: Category.shrine,
         popularity: 5,
         year: '711',
+        imageUrl: 'assets/images/fusimiinari.jpg',
       ),
       Place(
         id: 6,
@@ -54,6 +56,7 @@ class GeoService {
         category: Category.temple,
         popularity: 5,
         year: '752',
+        imageUrl: 'assets/images/todaiji.jpg',
       ),
       Place(
         id: 7,
