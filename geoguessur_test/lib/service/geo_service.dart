@@ -58,16 +58,9 @@ class GeoService {
         year: '752',
         imageUrl: 'assets/images/todaiji.jpg',
       ),
+
       Place(
         id: 7,
-        name: '吉野ヶ里遺跡',
-        address: '奈良県吉野郡吉野町吉野山',
-        category: Category.ruins,
-        popularity: 4,
-        year: '3世紀',
-      ),
-      Place(
-        id: 8,
         name: '高松塚古墳',
         address: '奈良県高市郡明日香村平田',
         category: Category.tomb,

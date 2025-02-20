@@ -9,6 +9,8 @@ Future<int> calculateScore(
 ) async {
   try {
     final quizeLocation = await transLateAddressToLocate(address);
+    print(location);
+    print(quizeLocation);
     final distance = await getDistanceBetweenTwoPoints(
       location.latitude,
       location.longitude,

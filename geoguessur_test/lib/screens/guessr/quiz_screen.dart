@@ -12,8 +12,8 @@ class QuizScreen extends StatelessWidget {
   final double maxDistance = 50000; // 大阪府の端から端までの長さの半分（メートル）　何度によって変更
 
   Future<Place> _fetchPlace() async {
-    final location = await getCurrentPosition();
-    return await geoService.getRandomPlace(level, location);
+    final startLocation = await getCurrentPosition();
+    return await geoService.getRandomPlace(level, startLocation);
   }
 
   @override
@@ -39,11 +39,11 @@ class QuizScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
                       try {
-                        final location = await getCurrentPosition();
+                        final answerLocation = await getCurrentPosition();
                         final score = await calculateScore(
                           place.address,
                           maxDistance,
-                          location,
+                          answerLocation,
                         );
                         context.go('./result', extra: score);
                       } catch (e) {
