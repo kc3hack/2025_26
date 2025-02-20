@@ -66,8 +66,8 @@ final router = GoRouter(
                 GoRoute(
                   name: 'result',
                   path: '/result',
-                  builder: (context, state) =>
-                      ResultScreen(Location: state.extra),
+                  builder:
+                      (context, state) => ResultScreen(location: state.extra),
                 ),
               ],
               builder: (context, state) => QuizScreen(

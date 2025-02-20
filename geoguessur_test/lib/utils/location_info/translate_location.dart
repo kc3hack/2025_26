@@ -11,9 +11,7 @@ Future<Placemark> transLateLocateToAddress(Position location) async {
   return placeMark;
 }
 
-// transLateAddressToLocate(String address) async {
-//   final placeMarks = await geoCoding.placemarkFromCoordinates(address);
-//   final placeMark = placeMarks[0];
-
-//   return placeMark;
-// }
+Future<Location> transLateAddressToLocate(String address) async {
+  final locations = await locationFromAddress(address);
+  return locations.first;
+}

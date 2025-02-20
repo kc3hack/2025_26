@@ -1,10 +1,19 @@
+enum Category {
+  shrine, // 神社
+  temple, // 寺
+  ruins, // 遺跡
+  tomb, // 古墳
+}
+
 class Place {
-  Place(
-      {required this.id,
-      required this.name,
-      required this.address,
-      required this.category,
-      required this.year});
+  Place({
+    required this.id,
+    required this.name,
+    required this.address,
+    required this.category,
+    required this.popularity,
+    required this.year,
+  });
   /*
     place
     id: num
@@ -20,6 +29,7 @@ class Place {
   int id;
   String name;
   String address;
-  String category;
+  Category category;
+  int popularity;
   String year;
 }
