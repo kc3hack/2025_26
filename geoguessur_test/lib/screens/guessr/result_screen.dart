@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key, required this.location});
+  const ResultScreen({super.key, required this.score});
 
-  final location;
+  final int score;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ResultScreen extends StatelessWidget {
               child: const Text('Go To Home'),
             ),
           ),
-          Center(child: Text('adress: ${location}')),
+          Center(child: Text('score: ${score}')),
         ],
       ),
     );

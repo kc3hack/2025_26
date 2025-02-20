@@ -26,24 +26,29 @@ final router = GoRouter(
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-        name: 'list',
-        path: '/list',
-        builder: (context, state) => const ListScreen(),
-        routes: [
-          //タグルート
-          GoRoute(
-            name: 'resultTags',
-            path: '/resultTags',
-            builder:  (context,state){
-              final map = state.uri.queryParameters;
-              String regionTagsStr = map['regionTagsStr']!;
-              String categoryTagsStr = map['categoryTagsStr']!;
-              String eraTagsStr = map['eraTagsStr']!;
-              return ResultTagSearch(regionTagsStr: regionTagsStr, categoryTagsStr: categoryTagsStr, eraTagsStr: eraTagsStr);
-            },
-          ),
-          //キーワードルート
-        ]),
+      name: 'list',
+      path: '/list',
+      builder: (context, state) => const ListScreen(),
+      routes: [
+        //タグルート
+        GoRoute(
+          name: 'resultTags',
+          path: '/resultTags',
+          builder: (context, state) {
+            final map = state.uri.queryParameters;
+            String regionTagsStr = map['regionTagsStr']!;
+            String categoryTagsStr = map['categoryTagsStr']!;
+            String eraTagsStr = map['eraTagsStr']!;
+            return ResultTagSearch(
+              regionTagsStr: regionTagsStr,
+              categoryTagsStr: categoryTagsStr,
+              eraTagsStr: eraTagsStr,
+            );
+          },
+        ),
+        //キーワードルート
+      ],
+    ),
     //検索画面ルート
     GoRoute(
       name: 'search',
@@ -67,12 +72,14 @@ final router = GoRouter(
                   name: 'result',
                   path: '/result',
                   builder:
-                      (context, state) => ResultScreen(location: state.extra),
+                      (context, state) =>
+                          ResultScreen(score: state.extra as int),
                 ),
               ],
-              builder: (context, state) => QuizScreen(
-                level: int.parse(state.pathParameters['level']!),
-              ),
+              builder:
+                  (context, state) => QuizScreen(
+                    level: int.parse(state.pathParameters['level']!),
+                  ),
             ),
           ],
           builder: (context, state) => LevelScreen(),
