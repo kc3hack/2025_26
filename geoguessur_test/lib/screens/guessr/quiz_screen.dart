@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:geoguessur_test/utils/get_location.dart';
+import 'package:geoguessur_test/service/geo_service.dart';
+import 'package:geoguessur_test/utils/location_info/calc_score.dart';
+import 'package:geoguessur_test/utils/location_info/get_location_info.dart';
 import 'package:go_router/go_router.dart';
 
 class QuizScreen extends StatelessWidget {
-  const QuizScreen({super.key, required this.level});
+  QuizScreen({super.key, required this.level});
   final int level;
-
+  final GeoService geoService = GeoService();
+  final double maxDistance = 50000; // 大阪府の端から端までの長さの半分（メートル）　何度によって変更
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,10 +17,17 @@ class QuizScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             try {
-              final position = await getCurrentPosition();
-              context.go('./result', extra: position);
+              final location = await getCurrentPosition();
+              final place = await geoService.getRandomPlace(level, location);
+              print(place.name + "," + place.address);
+
+              final score = await calculateScore(
+                place.address,
+                maxDistance,
+                location,
+              );
+              context.go('./result', extra: score);
             } catch (e) {
-              // エラー処理
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(SnackBar(content: Text('Error: $e')));
