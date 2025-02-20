@@ -2,9 +2,12 @@ import 'package:geoguessur_test/utils/location_info/get_location_info.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geoguessur_test/utils/location_info/translate_location.dart';
 
-Future<int> calculateScore(String address, double maxDistance) async {
+Future<int> calculateScore(
+  String address,
+  double maxDistance,
+  Position location,
+) async {
   try {
-    final location = await getCurrentPosition();
     final quizeLocation = await transLateAddressToLocate(address);
     final distance = await getDistanceBetweenTwoPoints(
       location.latitude,

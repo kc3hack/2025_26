@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:geoguessur_test/interface/place.dart';
+import 'package:geoguessur_test/utils/location_info/translate_location.dart';
+import 'package:geolocator/geolocator.dart';
 
 class GeoService {
-  Future<Place> getRandomPlace(int level) async {
+  Future<Place> getRandomPlace(int level, Position location) async {
     // ハードコードされたPlaceリスト
     final places = [
       Place(
@@ -71,13 +73,21 @@ class GeoService {
       ),
     ];
 
+    final currentAddress = await transLateLocateToAddress(location);
+    final prefecture = currentAddress.administrativeArea;
+
+    if (prefecture == null) {
+      throw Exception('Failed to get prefecture');
+    }
+    print(prefecture);
+
     // レベルによって絞り込み
     List<Place> filteredPlaces;
     if (level == 3) {
       filteredPlaces = places;
     } else if (level == 2) {
       filteredPlaces =
-          places.where((place) => place.address.contains('大阪府')).toList();
+          places.where((place) => place.address.contains(prefecture)).toList();
     } else {
       filteredPlaces = places.where((place) => place.popularity == 5).toList();
     }

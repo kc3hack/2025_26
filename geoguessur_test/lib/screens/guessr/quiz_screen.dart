@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/service/geo_service.dart';
 import 'package:geoguessur_test/utils/location_info/calc_score.dart';
+import 'package:geoguessur_test/utils/location_info/get_location_info.dart';
 import 'package:go_router/go_router.dart';
 
 class QuizScreen extends StatelessWidget {
@@ -16,10 +17,15 @@ class QuizScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             try {
-              final place = await geoService.getRandomPlace(level);
+              final location = await getCurrentPosition();
+              final place = await geoService.getRandomPlace(level, location);
               print(place.name + "," + place.address);
 
-              final score = await calculateScore(place.address, maxDistance);
+              final score = await calculateScore(
+                place.address,
+                maxDistance,
+                location,
+              );
               context.go('./result', extra: score);
             } catch (e) {
               ScaffoldMessenger.of(
