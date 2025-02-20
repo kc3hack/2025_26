@@ -8,13 +8,19 @@ class GuessrScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('guessr')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/guessr/level');
-          },
-          child: const Text('Go To level'),
-        ),
+      body: new Stack(
+        children: <Widget>[
+          new Image.asset("images/guessur_thumbnail.JPG", fit: BoxFit.cover),
+          new Center(
+            child: ElevatedButton(
+              onPressed: () {
+                context.go('/guessr/level');
+              },
+              child: const Text('Go To level'),
+            ),
+          ),
+        ],
+        fit: StackFit.expand,
       ),
     );
   }
