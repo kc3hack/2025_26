@@ -61,7 +61,12 @@ class QuizScreen extends HookWidget {
                     Stack(
                       children: [
                         Container(
-                          color: Colors.grey,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/wood2.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                           padding: const EdgeInsets.symmetric(vertical: 50.0),
                           child: Column(
                             children: [
