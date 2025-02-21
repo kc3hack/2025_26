@@ -34,10 +34,17 @@ class LevelScreen extends StatelessWidget {
                 Center(
                   child: ListTile(
                     leading: Container(
+                      width: 110, // 幅を固定
                       padding: const EdgeInsets.all(8.0),
-                      color: Colors.blue,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/wood.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       child: Text(
                         '簡単',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30.0,
@@ -65,10 +72,19 @@ class LevelScreen extends StatelessWidget {
                 Center(
                   child: ListTile(
                     leading: Container(
+                      width: 110, // 幅を固定
                       padding: const EdgeInsets.all(8.0),
-                      color: Colors.green,
+
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/wood.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+
                       child: Text(
                         '府県内',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30.0,
@@ -96,10 +112,17 @@ class LevelScreen extends StatelessWidget {
                 Center(
                   child: ListTile(
                     leading: Container(
+                      width: 110, // 幅を固定
                       padding: const EdgeInsets.all(8.0),
-                      color: Colors.red,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/wood.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                       child: Text(
                         '近畿',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30.0,
