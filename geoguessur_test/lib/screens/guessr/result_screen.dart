@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends HookWidget {
   const ResultScreen({super.key, required this.score, required this.place});
 
   final int score;
@@ -9,6 +10,20 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final animationController = useAnimationController(
+      duration: const Duration(seconds: 2),
+    );
+
+    final animation = IntTween(
+      begin: 0,
+      end: score,
+    ).animate(animationController);
+
+    useEffect(() {
+      animationController.forward();
+      return () => animationController.dispose();
+    }, [animationController]);
+
     return Scaffold(
       appBar: AppBar(title: Text("quiz result")),
       body: Stack(
@@ -28,7 +43,6 @@ class ResultScreen extends StatelessWidget {
               children: [
                 Container(
                   color: Colors.grey,
-
                   padding: const EdgeInsets.symmetric(vertical: 50.0),
                   child: Column(
                     children: [
@@ -40,15 +54,19 @@ class ResultScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        '得点: ${score}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      AnimatedBuilder(
+                        animation: animation,
+                        builder: (context, child) {
+                          return Text(
+                            '得点: ${animation.value}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        },
                       ),
-
                       SizedBox(height: 20.0),
                       Image.asset(place.imageUrl),
                       Text(
@@ -62,7 +80,6 @@ class ResultScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 ElevatedButton(
                   onPressed: () {
                     context.go('/');
