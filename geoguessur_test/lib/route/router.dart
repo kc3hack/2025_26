@@ -71,9 +71,10 @@ final router = GoRouter(
                 GoRoute(
                   name: 'result',
                   path: '/result',
-                  builder:
-                      (context, state) =>
-                          ResultScreen(score: state.extra as int),
+                  builder: (context, state) {
+                    final (score, place) = state.extra as (int, dynamic);
+                    return ResultScreen(score: score, place: place);
+                  },
                 ),
               ],
               builder:

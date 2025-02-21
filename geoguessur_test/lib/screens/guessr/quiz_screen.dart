@@ -9,6 +9,7 @@ import 'package:geoguessur_test/interface/place.dart';
 class QuizScreen extends HookWidget {
   const QuizScreen({super.key, required this.level});
   final int level;
+
   Future<Place> _fetchPlace(GeoService geoService, int level) async {
     final location = await getCurrentPosition();
     return await geoService.getRandomPlace(level, location);
@@ -57,25 +58,36 @@ class QuizScreen extends HookWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      color: Colors.grey,
-                      padding: const EdgeInsets.symmetric(vertical: 50.0),
-                      child: Image.asset(placeFuture.data!.imageUrl),
+                    Stack(
+                      children: [
+                        Container(
+                          color: Colors.grey,
+                          padding: const EdgeInsets.symmetric(vertical: 50.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                '此処は何処か',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Image.asset(placeFuture.data!.imageUrl),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Column(
-                        children: [
-                          Text('Place: ${placeFuture.data!.name}'),
-                          Text('Address: ${placeFuture.data!.address}'),
-                        ],
-                      ),
-                    ),
+
                     if (showButton.value)
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green.shade500,
                           foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
+                          ),
                         ),
                         onPressed: () async {
                           try {
@@ -85,7 +97,10 @@ class QuizScreen extends HookWidget {
                               maxDistance,
                               answerLocation,
                             );
-                            context.go('./result', extra: score);
+                            context.go(
+                              './result',
+                              extra: (score, placeFuture.data),
+                            );
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Error: $e')),
@@ -100,6 +115,40 @@ class QuizScreen extends HookWidget {
             )
           else
             Center(child: Text('No data')),
+          if (showButton.value)
+            Positioned(
+              top: 60,
+              right: 20,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlue, // 背景色を水色に設定
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
+                  ),
+                ),
+                icon: Icon(Icons.info_outline, color: Colors.white),
+                label: Text('ヒント', style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('説明'),
+                        content: Text('ここに説明を入力します。'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('閉じる'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
         ],
       ),
     );
