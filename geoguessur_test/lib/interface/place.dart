@@ -5,6 +5,13 @@ enum Category {
   tomb, // 古墳
 }
 
+enum Category {
+  shrine, // 神社
+  temple, // 寺
+  ruins, // 遺跡
+  tomb, // 古墳
+}
+
 class Place {
   Place({
     required this.id,
@@ -30,6 +37,8 @@ class Place {
   int id;
   String name;
   String address;
+  Category category;
+  int popularity;
   Category category;
   int popularity;
   String year;
