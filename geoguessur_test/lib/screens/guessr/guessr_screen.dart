@@ -6,8 +6,8 @@ class GuessrScreen extends StatelessWidget {
   final imgLPosition = -0.3;
   final buttonMargin = 150.0;
   final Map<String, double> buttonSize = const {
-    "horizontal": 50.0,
-    "vertical": 20.0,
+    "horizontal": 100.0,
+    "vertical": 40.0,
   };
 
   @override
@@ -24,25 +24,31 @@ class GuessrScreen extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: new Alignment(0.0, 1.0),
+            alignment: const Alignment(0.0, 1.0),
             child: Container(
-              margin: new EdgeInsets.only(bottom: buttonMargin),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // 四角にする
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: buttonSize["horizontal"]!,
-                    vertical: buttonSize["vertical"]!,
-                  ), // サイズを大きくする
-                ),
-                onPressed: () {
+              margin: EdgeInsets.only(bottom: buttonMargin),
+              child: GestureDetector(
+                onTap: () {
                   context.go('/guessr/level');
                 },
-                child: const Text(
-                  '開始',
-                  style: TextStyle(fontSize: 20, fontFamily: 'Tamanegi'),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/wood.png',
+                      width: buttonSize["horizontal"]! * 3,
+                      height: buttonSize["vertical"]! * 3,
+                      fit: BoxFit.cover,
+                    ),
+                    const Text(
+                      '開始',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'Tamanegi',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
