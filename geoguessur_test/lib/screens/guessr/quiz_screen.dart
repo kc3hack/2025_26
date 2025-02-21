@@ -9,13 +9,17 @@ import 'package:geoguessur_test/interface/place.dart';
 class QuizScreen extends HookWidget {
   const QuizScreen({super.key, required this.level});
   final int level;
+  Future<Place> _fetchPlace(GeoService geoService, int level) async {
+    final location = await getCurrentPosition();
+    return await geoService.getRandomPlace(level, location);
+  }
 
   @override
   Widget build(BuildContext context) {
     final geoService = GeoService();
     final maxDistance = 50000.0; // 大阪府の端から端までの長さの半分（メートル）
-    final placeFuture = useMemoized(() => _fetchPlace(geoService, level));
-    final snapshot = useFuture(placeFuture);
+    final placeData = useMemoized(() => _fetchPlace(geoService, level));
+    final placeFuture = useFuture(placeData);
     final showButton = useState(false);
 
     useEffect(() {
@@ -42,11 +46,11 @@ class QuizScreen extends HookWidget {
               ),
             ),
           ),
-          if (snapshot.connectionState == ConnectionState.waiting)
+          if (placeFuture.connectionState == ConnectionState.waiting)
             Center(child: CircularProgressIndicator())
-          else if (snapshot.hasError)
-            Center(child: Text('Error: ${snapshot.error}'))
-          else if (snapshot.hasData)
+          else if (placeFuture.hasError)
+            Center(child: Text('Error: ${placeFuture.error}'))
+          else if (placeFuture.hasData)
             FadeTransition(
               opacity: animationController,
               child: Center(
@@ -56,14 +60,14 @@ class QuizScreen extends HookWidget {
                     Container(
                       color: Colors.grey,
                       padding: const EdgeInsets.symmetric(vertical: 50.0),
-                      child: Image.asset(snapshot.data!.imageUrl),
+                      child: Image.asset(placeFuture.data!.imageUrl),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Column(
                         children: [
-                          Text('Place: ${snapshot.data!.name}'),
-                          Text('Address: ${snapshot.data!.address}'),
+                          Text('Place: ${placeFuture.data!.name}'),
+                          Text('Address: ${placeFuture.data!.address}'),
                         ],
                       ),
                     ),
@@ -77,7 +81,7 @@ class QuizScreen extends HookWidget {
                           try {
                             final answerLocation = await getCurrentPosition();
                             final score = await calculateScore(
-                              snapshot.data!.address,
+                              placeFuture.data!.address,
                               maxDistance,
                               answerLocation,
                             );
@@ -99,10 +103,5 @@ class QuizScreen extends HookWidget {
         ],
       ),
     );
-  }
-
-  Future<Place> _fetchPlace(GeoService geoService, int level) async {
-    final location = await getCurrentPosition();
-    return await geoService.getRandomPlace(level, location);
   }
 }
