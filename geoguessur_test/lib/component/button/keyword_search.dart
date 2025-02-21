@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/component/button/search_page.dart';
+import 'package:go_router/go_router.dart';
 
 //キーワード検索フィールド（仮）
 
@@ -13,6 +14,25 @@ class KeyWordSearch extends StatefulWidget {
 class _KeyWordSearchState extends State<KeyWordSearch> {
   bool isOpen = false;
   bool showContent = false;
+  final keywordController = TextEditingController();
+  bool isText = false;
+
+  submit() {
+    if (keywordController.text != '') {
+      List<String> words = keywordController.text.split(RegExp(r'\s'));
+      words = words.map((word) => word.trim()).toList();
+      words.removeWhere((word) => word.isEmpty);
+      String searchWords = words.join(',');
+
+      setState(() {
+        isOpen = false;
+        showContent = false;
+      });
+
+      ///keywordController.clear();
+      context.go('/list/resultKeywords?searchWords=$searchWords');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,42 +54,103 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
                 ),
                 child: Row(
                   children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+                    //検索ボタン
+                    IconButton(onPressed: submit, icon: Icon(Icons.search)),
+                    //検索フィールド
                     Expanded(
                       child: TextField(
+                        controller: keywordController,
                         decoration: InputDecoration(
                           hintText: 'キーワード検索',
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            isText = value.isNotEmpty;
+                          });
+                        },
                         onTap: () {
                           setState(() {
                             isOpen = true;
                           });
                         },
+                        onSubmitted: (value) => submit(),
                       ),
                     ),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.sort)),
+                    //ソートボタン
+                    IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          builder: (BuildContext context) {
+                            return SortListSheet();
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.sort),
+                    ),
                   ],
                 ),
               ),
+              //タグ
               AnimatedContainer(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 duration: Duration(milliseconds: 500),
-                curve: Curves.fastOutSlowIn,
-                height: isOpen ? MediaQuery.of(context).size.height * 0.65 : 0,
-                child: SearchPage(
-                  isOpen: (ret) {
+                curve: Curves.easeInOutQuint,
+                height: isOpen ? MediaQuery.of(context).size.height * 0.67 : 0,
+                onEnd: () {
+                  if (isOpen) {
                     setState(() {
-                      isOpen = ret;
+                      showContent = true;
                     });
-                  },
+                  } else {
+                    keywordController.clear();
+                    isText = false;
+                  }
+                },
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeOutQuad,
+                  opacity: showContent ? 1 : 0,
+                  child: SearchPage(
+                    isOpen: (ret) {
+                      setState(() {
+                        isOpen = ret;
+                        showContent = ret;
+                      });
+                    },
+                    isText: isText,
+                    submit: submit,
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class SortListSheet extends StatefulWidget {
+  const SortListSheet({
+    super.key,
+  });
+
+  @override
+  State<SortListSheet> createState() => _SortListSheetState();
+}
+
+class _SortListSheetState extends State<SortListSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(30),
+      
     );
   }
 }

@@ -5,8 +5,15 @@ import 'package:geoguessur_test/component/button/select_tag.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key, required this.isOpen});
+  const SearchPage({
+    super.key,
+    required this.isOpen,
+    required this.isText,
+    required this.submit,
+  });
   final ValueChanged<bool> isOpen;
+  final bool isText;
+  final Function submit;
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -96,9 +103,13 @@ class _SearchPageState extends State<SearchPage> {
                 onPressed: () {
                   //Navigator.pop(context);
                   widget.isOpen(false);
+                  if(widget.isText){
+                    widget.submit();
+                  }
+                  else{
                   context.go(
                     '/list/resultTags?regionTagsStr=${regionTags.join(',')}&categoryTagsStr=${categoryTags.join(',')}&eraTagsStr=${eraTags.join(',')}',
-                  );
+                  );}
                 },
                 child: Text(
                   'この条件で調べる',
