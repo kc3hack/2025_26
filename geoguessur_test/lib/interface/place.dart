@@ -14,6 +14,7 @@ class Place {
     required this.popularity,
     required this.year,
   });
+
   /*
     place
     id: num
@@ -32,4 +33,19 @@ class Place {
   Category category;
   int popularity;
   String year;
+
+  String get getAll {
+    return "$name,$address,${(() {
+      switch (category) {
+        case Category.shrine:
+          return '神社';
+        case Category.temple:
+          return '寺';
+        case Category.ruins:
+          return '遺跡';
+        case Category.tomb:
+          return '古墳';
+        }
+    })()},$year";
+  }
 }
