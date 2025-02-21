@@ -21,6 +21,11 @@ Future<int> calculateScore(
     // 距離に基づいて点数を計算
     final score =
         ((maxDistance - distance) / maxDistance * 100).clamp(0, 100).toInt();
+    if (score < 0) {
+      return 0;
+    } else if (score > 95) {
+      return 100;
+    }
     return score;
   } catch (e) {
     throw Exception('Error calculating score: $e');

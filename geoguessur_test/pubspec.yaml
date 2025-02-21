@@ -38,6 +38,7 @@ dependencies:
   geolocator: ^13.0.2
   geocoding: ^3.0.0
   gap: ^3.0.1
+  flutter_hooks: ^0.20.5
  
 
 dev_dependencies:
