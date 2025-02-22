@@ -62,6 +62,14 @@ class FirestoreService {
     await _firestore.collection('places').doc(id).delete();
   }
 
+  // Delete all places
+  Future<void> deleteAllPlaces() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('places').get();
+    for (DocumentSnapshot doc in querySnapshot.docs) {
+      await doc.reference.delete();
+    }
+  }
+
   // Get all places
   Future<List<Place>> getAllPlaces() async {
     QuerySnapshot querySnapshot = await _firestore.collection('places').get();
