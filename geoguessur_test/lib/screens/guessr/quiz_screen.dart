@@ -78,7 +78,23 @@ class QuizScreen extends HookWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Image.network(placeFuture.data!.imageUrl),
+                              // 画像の読み込み中にローディングインジケーターを表示
+                              FutureBuilder(
+                                future: precacheImage(
+                                  NetworkImage(placeFuture.data!.imageUrl),
+                                  context,
+                                ),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    return Image.network(
+                                      placeFuture.data!.imageUrl,
+                                    );
+                                  } else {
+                                    return CircularProgressIndicator();
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         ),
