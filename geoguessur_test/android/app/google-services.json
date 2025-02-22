@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190567880564",
+    "project_id": "shrines-and-temples-app",
+    "storage_bucket": "shrines-and-temples-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190567880564:android:a2c95b8f1f08a52fdb7e21",
+        "android_client_info": {
+          "package_name": "com.example.geoguessur_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk7gLjQkMU0uHt6255zaqsO0mkSUxWJn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
