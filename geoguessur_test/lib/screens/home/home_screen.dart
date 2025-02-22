@@ -27,7 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Set<Marker> _markers = {};
   Future<void> _fetchPlaces() async {
     final String apiKey = Env.pass1; // 取得したAPIキー
-    final String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+    final String url =
+        "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
         "?location=34.881563,135.347433"
         "&radius=50000"
         "&type=place_of_worship"
@@ -40,15 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
       final List places = data['results'];
 
       setState(() {
-        _markers = places.map((place) {
-          final lat = place['geometry']['location']['lat'];
-          final lng = place['geometry']['location']['lng'];
-          return Marker(
-            markerId: MarkerId(place['name']),
-            position: LatLng(lat, lng),
-            infoWindow: InfoWindow(title: place['name']),
-          );
-        }).toSet();
+        _markers =
+            places.map((place) {
+              final lat = place['geometry']['location']['lat'];
+              final lng = place['geometry']['location']['lng'];
+              return Marker(
+                markerId: MarkerId(place['name']),
+                position: LatLng(lat, lng),
+                infoWindow: InfoWindow(title: place['name']),
+              );
+            }).toSet();
       });
     }
     print("Response status: ${response.statusCode}");
@@ -64,15 +66,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Maps Sample App'),
+          title: GestureDetector(
+            onTap: () {
+              context.go('/debug');
+            },
+            child: const Text('Maps Sample App'),
+          ),
           backgroundColor: Colors.green[700],
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
+          initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
           markers: _markers,
         ),
       ),
