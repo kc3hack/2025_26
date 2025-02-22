@@ -73,7 +73,7 @@ class ResultScreen extends HookWidget {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      Image.asset(place.imageUrl),
+                      Image.network(place.imageUrl),
                       Text(
                         '番地: ${place.address}',
                         style: TextStyle(
