@@ -18,20 +18,25 @@ class ResultTagSearch extends StatelessWidget {
 
   List<String> get regionTags => regionTagsStr.split(',');
   List<Category> get categoryTags {
-    return categoryTagsStr.split(',').map((category) {
-      switch (category) {
-        case '神社':
-          return Category.shrine;
-        case '寺':
-          return Category.temple;
-        case '遺跡':
-          return Category.ruins;
-        case '古墳':
-          return Category.tomb;
-        default:
-          return null; // 未知のカテゴリは null にする
-      }
-    }).where((e) => e != null).cast<Category>().toList();
+    return categoryTagsStr
+        .split(',')
+        .map((category) {
+          switch (category) {
+            case '神社':
+              return Category.shrine;
+            case '寺':
+              return Category.temple;
+            case '遺跡':
+              return Category.ruins;
+            case '古墳':
+              return Category.tomb;
+            default:
+              return null; // 未知のカテゴリは null にする
+          }
+        })
+        .where((e) => e != null)
+        .cast<Category>()
+        .toList();
   }
 
   List<String> get eraTags => eraTagsStr.split(',');
@@ -44,7 +49,8 @@ class ResultTagSearch extends StatelessWidget {
       address: '奈良県奈良市雑司町406-1',
       category: Category.temple,
       year: '',
-      popularity: 5,
+      popularity: 2,
+      eventDescription: 'a',
     ),
     Place(
       id: 001,
@@ -52,7 +58,8 @@ class ResultTagSearch extends StatelessWidget {
       address: '京都府京都市東山区清水1丁目294',
       category: Category.temple,
       year: '',
-      popularity: 4,
+      popularity: 3,
+      eventDescription: 'b',
     ),
     Place(
       id: 002,
@@ -60,11 +67,12 @@ class ResultTagSearch extends StatelessWidget {
       address: '三重県伊勢市宇治館町1番地',
       category: Category.shrine,
       year: '',
-      popularity: 5,
+      popularity: 1,
+      eventDescription: '',
     ),
   ];
 
-//データのアクセス先を変更すること
+  //データのアクセス先を変更すること
   Iterable<Place> get resultPlaces => places.where(
     (place) =>
         (regionTags.any((tag) => place.address.contains(tag)) ||

@@ -13,6 +13,7 @@ class Place {
     required this.category,
     required this.popularity,
     required this.year,
+    required this.eventDescription,
   });
 
   /*
@@ -33,6 +34,7 @@ class Place {
   Category category;
   int popularity;
   String year;
+  String eventDescription;
 
   String get getAll {
     return "$name,$address,${(() {

@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:geoguessur_test/component/button/search_page.dart';
 import 'package:go_router/go_router.dart';
 
-//キーワード検索フィールド（仮）
-
+/*
+  検索バー
+    ├ キーワード検索
+    ├ ソートボタン
+    └ タグ検索
+  ラジオボタン
+*/
 class KeyWordSearch extends StatefulWidget {
   const KeyWordSearch({super.key});
 
@@ -136,10 +141,9 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
   }
 }
 
+// ラジオボタン
 class SortListSheet extends StatefulWidget {
-  const SortListSheet({
-    super.key,
-  });
+  const SortListSheet({super.key});
 
   @override
   State<SortListSheet> createState() => _SortListSheetState();
@@ -149,8 +153,18 @@ class _SortListSheetState extends State<SortListSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       padding: EdgeInsets.all(30),
-      
+      child: Column(
+        children: [
+          RadioListTile(
+            title: Text('あ'),
+            value: null,
+            groupValue: null,
+            onChanged: (Null value) {},
+          ),
+        ],
+      ),
     );
   }
 }

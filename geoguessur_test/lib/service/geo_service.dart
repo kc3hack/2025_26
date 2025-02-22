@@ -14,6 +14,7 @@ class GeoService {
         category: Category.shrine,
         popularity: 5,
         year: '211',
+        eventDescription: '',
       ),
       Place(
         id: 2,
@@ -22,6 +23,7 @@ class GeoService {
         category: Category.temple,
         popularity: 4,
         year: '593',
+        eventDescription: '',
       ),
       Place(
         id: 3,
@@ -30,6 +32,7 @@ class GeoService {
         category: Category.ruins,
         popularity: 3,
         year: '710',
+        eventDescription: '',
       ),
       Place(
         id: 4,
@@ -38,6 +41,7 @@ class GeoService {
         category: Category.tomb,
         popularity: 2,
         year: '5世紀',
+        eventDescription: '',
       ),
       Place(
         id: 5,
@@ -46,6 +50,7 @@ class GeoService {
         category: Category.shrine,
         popularity: 5,
         year: '711',
+        eventDescription: '',
       ),
       Place(
         id: 6,
@@ -54,6 +59,7 @@ class GeoService {
         category: Category.temple,
         popularity: 5,
         year: '752',
+        eventDescription: '',
       ),
       Place(
         id: 7,
@@ -62,6 +68,7 @@ class GeoService {
         category: Category.ruins,
         popularity: 4,
         year: '3世紀',
+        eventDescription: '',
       ),
       Place(
         id: 8,
@@ -70,6 +77,7 @@ class GeoService {
         category: Category.tomb,
         popularity: 3,
         year: '7世紀',
+        eventDescription: '',
       ),
     ];
 
