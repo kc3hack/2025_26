@@ -1,3 +1,4 @@
+import 'package:geoguessur_test/screens/debug/debug_screen.dart';
 import 'package:geoguessur_test/screens/guessr/level_screen.dart';
 import 'package:geoguessur_test/screens/guessr/quiz_screen.dart';
 import 'package:geoguessur_test/screens/guessr/result_screen.dart';
@@ -7,7 +8,6 @@ import 'package:geoguessur_test/screens/home/home_screen.dart';
 import 'package:geoguessur_test/screens/guessr/guessr_screen.dart';
 import 'package:geoguessur_test/screens/list/result_keyword_search.dart';
 import 'package:geoguessur_test/screens/list/result_tag_search.dart';
-import 'package:geoguessur_test/component/button/search_page.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -92,6 +92,12 @@ final router = GoRouter(
         ),
       ],
       builder: (context, state) => const GuessrScreen(),
+    ),
+
+    GoRoute(
+      name: 'debug',
+      path: '/debug',
+      builder: (context, state) => const DebugScreen(),
     ),
   ],
 );
