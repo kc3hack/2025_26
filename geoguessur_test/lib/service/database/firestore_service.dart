@@ -1,65 +1,85 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'dart:math';
-// import 'package:geoguessur_test/interface/place.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geoguessur_test/interface/place.dart';
 
-// class FirestoreService {
-//   final FirebaseFirestore _db = FirebaseFirestore.instance;
+class FirestoreService {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-//   Future<Place> getRandomPlace(int level) async {
-//     Query query;
+  // Create a new place
+  Future<void> createPlace(Place place) async {
+    await _firestore.collection('places').add({
+      'id': place.id,
+      'name': place.name,
+      'address': place.address,
+      'category': place.category.toString().split('.').last,
+      'popularity': place.popularity,
+      'year': place.year,
+      'imageUrl': place.imageUrl,
+      'eventName': place.eventName,
+      'eventDescription': place.eventDescription,
+      'eventImageUrl': place.eventImageUrl,
+    });
+  }
 
-//     // レベルによってクエリを設定
-//     if (level == 1) {
-//       query = _db.collection('places').where('region', isEqualTo: '近畿地方');
-//     } else if (level == 2) {
-//       query = _db.collection('places').where('region', isEqualTo: '大阪府');
-//     } else {
-//       query = _db.collection('places').where('category', isEqualTo: '有名な場所');
-//     }
+  // Read a place by ID
+  Future<Place?> getPlaceById(String id) async {
+    DocumentSnapshot doc = await _firestore.collection('places').doc(id).get();
+    if (doc.exists) {
+      return Place(
+        id: doc['id'],
+        name: doc['name'],
+        address: doc['address'],
+        category: Category.values.firstWhere(
+          (e) => e.toString() == 'Category.${doc['category']}',
+        ),
+        popularity: doc['popularity'],
+        year: doc['year'],
+        imageUrl: doc['imageUrl'],
+        eventName: doc['eventName'],
+        eventDescription: doc['eventDescription'],
+        eventImageUrl: doc['eventImageUrl'],
+      );
+    }
+    return null;
+  }
 
-//     // クエリを実行してドキュメントを取得
-//     QuerySnapshot querySnapshot = await query.get();
-//     List<QueryDocumentSnapshot> docs = querySnapshot.docs;
+  // Update a place
+  Future<void> updatePlace(String id, Place place) async {
+    await _firestore.collection('places').doc(id).update({
+      'name': place.name,
+      'address': place.address,
+      'category': place.category.toString().split('.').last,
+      'popularity': place.popularity,
+      'year': place.year,
+      'imageUrl': place.imageUrl,
+      'eventName': place.eventName,
+      'eventDescription': place.eventDescription,
+      'eventImageUrl': place.eventImageUrl,
+    });
+  }
 
-//     // ランダムに一つのドキュメントを選択
-//     Random random = Random();
-//     int randomIndex = random.nextInt(docs.length);
-//     DocumentSnapshot randomDoc = docs[randomIndex];
+  // Delete a place
+  Future<void> deletePlace(String id) async {
+    await _firestore.collection('places').doc(id).delete();
+  }
 
-//     // ドキュメントをPlaceオブジェクトに変換
-//     Place place = Place(
-//       id: randomDoc['id'],
-//       name: randomDoc['name'],
-//       address: randomDoc['address'],
-//       category: randomDoc['category'],
-//       year: randomDoc['year'],
-//     );
-
-//     return place;
-//   }
-// }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'dart:math';
-// import 'package:geoguessur_test/interface/place.dart';
-
-// class FirestoreService {
-//   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-//   Future<List<Place>> getAllPlaces() async {
-//     QuerySnapshot querySnapshot = await _db.collection('places').get();
-//     List<QueryDocumentSnapshot> docs = querySnapshot.docs;
-
-//     List<Place> places = docs.map((doc) {
-//       return Place(
-//         id: doc['id'],
-//         name: doc['name'],
-//         address: doc['address'],
-//         category: doc['category'],
-//         year: doc['year'],
-//       );
-//     }).toList();
-
-//     return places;
-//   }
-// }
+  // Get all places
+  Future<List<Place>> getAllPlaces() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('places').get();
+    return querySnapshot.docs.map((doc) {
+      return Place(
+        id: doc['id'],
+        name: doc['name'],
+        address: doc['address'],
+        category: Category.values.firstWhere(
+          (e) => e.toString() == 'Category.${doc['category']}',
+        ),
+        popularity: doc['popularity'],
+        year: doc['year'],
+        imageUrl: doc['imageUrl'],
+        eventName: doc['eventName'],
+        eventDescription: doc['eventDescription'],
+        eventImageUrl: doc['eventImageUrl'],
+      );
+    }).toList();
+  }
+}
