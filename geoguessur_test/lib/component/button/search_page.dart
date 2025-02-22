@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:geoguessur_test/component/button/keyword_search.dart';
 import 'package:geoguessur_test/component/button/select_tag.dart';
 import 'package:go_router/go_router.dart';
 

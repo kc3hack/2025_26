@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:geoguessur_test/component/button/keyword_search.dart';
-import 'package:geoguessur_test/component/button/search_page.dart';
 import 'package:geoguessur_test/interface/place.dart';
 import 'package:geoguessur_test/screens/list/result_tag_search.dart';
-import 'package:go_router/go_router.dart';
-
-class ListScreen extends StatelessWidget {
+class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
 
+  @override
+  State<ListScreen> createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
   List<Place> get eventData =>
       ResultTagSearch.places
           .where((place) => place.eventDescription.isNotEmpty)
@@ -30,7 +32,7 @@ class ListScreen extends StatelessWidget {
               ),
               Divider(height: 30),
               //Text('イベント情報など\n続報をお楽しみにお待ちください', textAlign: TextAlign.center),
-              Text('開催中のイベント一覧', style: TextStyle(fontSize: 18)),
+              Text('イベント一覧', style: TextStyle(fontSize: 18)),
               Divider(height: 30), //仮
               Expanded(
                 child: ListView.builder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:geoguessur_test/component/button/search_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -144,12 +145,18 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
 // ラジオボタン
 class SortListSheet extends StatefulWidget {
   const SortListSheet({super.key});
+  //final ValueChanged<SortBy> sortBy;
 
   @override
   State<SortListSheet> createState() => _SortListSheetState();
 }
 
+enum SortBy { id, name, popularity }
+
 class _SortListSheetState extends State<SortListSheet> {
+  SortBy sortBy = SortBy.id;
+  bool sortUp = true; //昇順:降順
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,14 +164,103 @@ class _SortListSheetState extends State<SortListSheet> {
       padding: EdgeInsets.all(30),
       child: Column(
         children: [
-          RadioListTile(
-            title: Text('あ'),
-            value: null,
-            groupValue: null,
-            onChanged: (Null value) {},
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('並び替え', style: TextStyle(fontSize: 23)),
+                  ],
+                ),
+                //Gap(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          sortUp = !sortUp;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          AnimatedRotation(
+                            turns: sortUp ? 0 : 0.5, // 0度（昇順）⇄ 180度（降順）
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            child: Icon(
+                              Icons.arrow_upward,
+                              color: Colors.grey.shade800,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            sortUp ? '昇順' : '降順',
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Divider(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              RadioListTile(
+                title: Text('デフォルト'),
+                value: SortBy.id,
+                groupValue: sortBy,
+                onChanged: (value) {
+                  setState(() {
+                    sortBy = value!;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: Text('名前順'),
+                value: SortBy.name,
+                groupValue: sortBy,
+                onChanged: (value) {
+                  setState(() {
+                    sortBy = value!;
+                  });
+                },
+              ),
+              RadioListTile(
+                title: Text('知名度順'),
+                value: SortBy.popularity,
+                groupValue: sortBy,
+                onChanged: (value) {
+                  setState(() {
+                    sortBy = value!;
+                  });
+                },
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
+
+/*
+  child: Row(
+    children: [
+      if (sortUp) ...[
+        Icon(Icons.arrow_upward, color: Colors.grey.shade800),
+        Text('昇順', style: TextStyle(fontSize: 14)),
+      ] else ...[
+        Icon(Icons.arrow_downward, color: Colors.grey.shade800),
+        Text('降順', style: TextStyle(fontSize: 14)),
+      ],
+    ],
+  ),
+*/
