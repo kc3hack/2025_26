@@ -1,3 +1,4 @@
+import 'package:geoguessur_test/screens/debug/debug_screen.dart';
 import 'package:geoguessur_test/screens/guessr/level_screen.dart';
 import 'package:geoguessur_test/screens/guessr/quiz_screen.dart';
 import 'package:geoguessur_test/screens/guessr/result_screen.dart';
@@ -5,6 +6,8 @@ import 'package:geoguessur_test/screens/list/list_screen.dart';
 import 'package:geoguessur_test/screens/home/detail_screen.dart';
 import 'package:geoguessur_test/screens/home/home_screen.dart';
 import 'package:geoguessur_test/screens/guessr/guessr_screen.dart';
+import 'package:geoguessur_test/screens/list/result_keyword_search.dart';
+import 'package:geoguessur_test/screens/list/result_tag_search.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -27,7 +30,37 @@ final router = GoRouter(
       name: 'list',
       path: '/list',
       builder: (context, state) => const ListScreen(),
+      routes: [
+        //タグルート
+        GoRoute(
+          name: 'resultTags',
+          path: '/resultTags',
+          builder: (context, state) {
+            final map = state.uri.queryParameters;
+            String regionTagsStr = map['regionTagsStr']!;
+            String categoryTagsStr = map['categoryTagsStr']!;
+            String eraTagsStr = map['eraTagsStr']!;
+            return ResultTagSearch(
+              regionTagsStr: regionTagsStr,
+              categoryTagsStr: categoryTagsStr,
+              eraTagsStr: eraTagsStr,
+            );
+          },
+        ),
+        //キーワードルート
+        GoRoute(
+          name: 'resultKeywords',
+          path: '/resultKeywords',
+          builder: (context, state) {
+            final map = state.uri.queryParameters;
+            String searchWords = map['searchWords']!;
+            return ResultKeywordSearch(searchWords: searchWords);
+          },
+        ),
+      ],
     ),
+
+    //ゲッサールート
     GoRoute(
       name: 'guessr',
       path: '/guessr',
@@ -43,8 +76,10 @@ final router = GoRouter(
                 GoRoute(
                   name: 'result',
                   path: '/result',
-                  builder:
-                      (context, state) => ResultScreen(Location: state.extra),
+                  builder: (context, state) {
+                    final (score, place) = state.extra as (int, dynamic);
+                    return ResultScreen(score: score, place: place);
+                  },
                 ),
               ],
               builder:
@@ -57,6 +92,12 @@ final router = GoRouter(
         ),
       ],
       builder: (context, state) => const GuessrScreen(),
+    ),
+
+    GoRoute(
+      name: 'debug',
+      path: '/debug',
+      builder: (context, state) => const DebugScreen(),
     ),
   ],
 );
