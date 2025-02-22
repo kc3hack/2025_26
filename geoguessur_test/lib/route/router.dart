@@ -1,3 +1,4 @@
+import 'package:geoguessur_test/screens/debug/debug_screen.dart';
 import 'package:geoguessur_test/screens/guessr/level_screen.dart';
 import 'package:geoguessur_test/screens/guessr/quiz_screen.dart';
 import 'package:geoguessur_test/screens/guessr/result_screen.dart';
@@ -75,8 +76,10 @@ final router = GoRouter(
                 GoRoute(
                   name: 'result',
                   path: '/result',
-                  builder:
-                      (context, state) => ResultScreen(location: state.extra),
+                  builder: (context, state) {
+                    final (score, place) = state.extra as (int, dynamic);
+                    return ResultScreen(score: score, place: place);
+                  },
                 ),
               ],
               builder:
@@ -89,6 +92,12 @@ final router = GoRouter(
         ),
       ],
       builder: (context, state) => const GuessrScreen(),
+    ),
+
+    GoRoute(
+      name: 'debug',
+      path: '/debug',
+      builder: (context, state) => const DebugScreen(),
     ),
   ],
 );

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:geoguessur_test/route/router.dart';
+import 'package:geoguessur_test/service/database/develop_creat.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // 一度だけデータを保存
+  // final developCreat = DevelopCreat();
+  // await developCreat.savePlacesToFirestore();
   runApp(const MyApp());
 }
 

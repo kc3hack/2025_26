@@ -13,7 +13,10 @@ class Place {
     required this.category,
     required this.popularity,
     required this.year,
-    required this.eventDescription,
+    this.imageUrl = 'assets/images/default.jpg',
+    this.eventName = '',
+    this.eventDescription = '',
+    this.eventImageUrl = 'assets/images/default.jpg',
   });
 
   /*
@@ -34,7 +37,10 @@ class Place {
   Category category;
   int popularity;
   String year;
+  String imageUrl;
+  String eventName;
   String eventDescription;
+  String eventImageUrl;
 
   String get getAll {
     return "$name,$address,${(() {
@@ -47,7 +53,7 @@ class Place {
           return '遺跡';
         case Category.tomb:
           return '古墳';
-        }
+      }
     })()},$year";
   }
 }
