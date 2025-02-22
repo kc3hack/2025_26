@@ -23,6 +23,20 @@ class GuessrScreen extends StatelessWidget {
               alignment: Alignment(imgLPosition, 0),
             ),
           ),
+          Positioned(
+            top: 100,
+            left: 0,
+            right: 0,
+            height: 50,
+            child: Container(
+              color: Colors.white,
+              alignment: Alignment.center,
+              child: const Text(
+                'いざ、推測遊戯',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+            ),
+          ),
           Align(
             alignment: const Alignment(0.0, 1.0),
             child: Container(
@@ -36,8 +50,8 @@ class GuessrScreen extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/wood.png',
-                      width: buttonSize["horizontal"]! * 3,
-                      height: buttonSize["vertical"]! * 3,
+                      width: buttonSize["horizontal"]! * 2,
+                      height: buttonSize["vertical"]! * 2,
                       fit: BoxFit.cover,
                     ),
                     const Text(
