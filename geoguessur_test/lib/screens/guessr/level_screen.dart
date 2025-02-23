@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/component/level/level_tile.dart';
-import 'package:go_router/go_router.dart';
 
 class LevelScreen extends StatelessWidget {
   const LevelScreen({super.key});
