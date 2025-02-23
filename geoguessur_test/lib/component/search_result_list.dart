@@ -1,6 +1,7 @@
 //リスト作成ウィジェット
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/interface/place.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchResultList extends StatelessWidget {
   const SearchResultList({super.key, required this.resultPlaces});
@@ -18,7 +19,7 @@ class SearchResultList extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 print(resultPlaces.elementAt(index).name);
-                //context.push(''); 詳細情報へ
+                context.push('/detail', extra: resultPlaces.elementAt(index));
               },
               child: Container(
                 color: Colors.transparent,
