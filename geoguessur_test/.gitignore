@@ -46,6 +46,7 @@ app.*.map.json
 
 .env
 env.g.dart
+/ios/Runner/Environment.swift
 
 
 

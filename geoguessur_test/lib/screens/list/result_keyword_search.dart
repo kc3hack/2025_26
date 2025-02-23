@@ -4,18 +4,65 @@ import 'package:geoguessur_test/component/button/keyword_search.dart';
 import 'package:geoguessur_test/component/search_result_list.dart';
 import 'package:geoguessur_test/interface/place.dart';
 import 'package:geoguessur_test/screens/list/result_tag_search.dart';
+import 'package:geoguessur_test/service/database/firestore_service.dart';
 
-class ResultKeywordSearch extends StatelessWidget {
+class ResultKeywordSearch extends StatefulWidget {
   const ResultKeywordSearch({super.key, required this.searchWords});
 
   final String searchWords;
 
-  List<String> get words => searchWords.split(',');
+  @override
+  State<ResultKeywordSearch> createState() => _ResultKeywordSearchState();
+}
+
+class _ResultKeywordSearchState extends State<ResultKeywordSearch> {
+  List<String> get words => widget.searchWords.split(',');
+  SortBy sortBy = SortBy.id;
+
+  final FirestoreService _firestoreService = FirestoreService();
+  List<Place> places = [];
 
   //データのアクセス先を変更すること
-  Iterable<Place> get resultPlaces => ResultTagSearch.places.where(
+  Iterable<Place> get resultPlaces => places.where(
     (place) => words.every((word) => place.getAll.contains(word)),
   );
+
+  //ソート
+  void onSort(SortBy sortBy, bool sortUp) {
+    setState(() {
+      this.sortBy = sortBy;
+      places = sortPlaces(sortUp);
+    });
+  }
+
+  List<Place> sortPlaces(bool sortUp) {
+    List<Place> sortedPlaces = places;
+    switch (sortBy) {
+      case SortBy.id:
+        sortedPlaces.sort((a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id));
+        return sortedPlaces;
+      case SortBy.year:
+        sortedPlaces.sort((a, b) => sortUp ? a.year.compareTo(b.year) : b.year.compareTo(a.year));
+        return sortedPlaces;
+      case SortBy.popularity:
+        sortedPlaces.sort((a, b) => sortUp ? a.popularity.compareTo(b.popularity) : b.popularity.compareTo(a.popularity));
+        return sortedPlaces;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPlaces();
+  }
+
+  Future<void> _fetchPlaces() async {
+    List<Place> fetchedPlaces = await _firestoreService.getAllPlaces();
+    setState(() {
+      places = fetchedPlaces;
+    });
+    onSort(sortBy, true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +93,7 @@ class ResultKeywordSearch extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
-            child: KeyWordSearch(),
+            child: KeyWordSearch(onSort: onSort, sortBy: sortBy, ),
           ),
         ],
       ),
