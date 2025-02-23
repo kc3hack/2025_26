@@ -73,7 +73,30 @@ class ResultScreen extends HookWidget {
                         },
                       ),
                       SizedBox(height: 20.0),
-                      Image.network(place.imageUrl),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final imageWidth = 400.0;
+                          final imageHeight = 300.0;
+                          final isOverflowing =
+                              imageWidth > constraints.maxWidth ||
+                              imageHeight > constraints.maxHeight;
+
+                          return SizedBox(
+                            width:
+                                isOverflowing
+                                    ? constraints.maxWidth
+                                    : imageWidth,
+                            height:
+                                isOverflowing
+                                    ? constraints.maxHeight
+                                    : imageHeight,
+                            child: Image.network(
+                              place.imageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                      ),
                       Text(
                         '番地: ${place.address}',
                         style: TextStyle(

@@ -55,82 +55,107 @@ class QuizScreen extends HookWidget {
             FadeTransition(
               opacity: animationController,
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/wood2.png'),
-                              fit: BoxFit.cover,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/wood2.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 50.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  '此処は何処',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                FutureBuilder(
+                                  future: precacheImage(
+                                    NetworkImage(placeFuture.data!.imageUrl),
+                                    context,
+                                  ),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return LayoutBuilder(
+                                        builder: (context, constraints) {
+                                          final imageWidth = 400.0;
+                                          final imageHeight = 300.0;
+                                          final isOverflowing =
+                                              imageWidth >
+                                                  constraints.maxWidth ||
+                                              imageHeight >
+                                                  constraints.maxHeight;
+
+                                          return SizedBox(
+                                            width:
+                                                isOverflowing
+                                                    ? constraints.maxWidth
+                                                    : imageWidth,
+                                            height:
+                                                isOverflowing
+                                                    ? constraints.maxHeight
+                                                    : imageHeight,
+                                            child: Image.network(
+                                              placeFuture.data!.imageUrl,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 50.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                '此処は何処か',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              // 画像の読み込み中にローディングインジケーターを表示
-                              FutureBuilder(
-                                future: precacheImage(
-                                  NetworkImage(placeFuture.data!.imageUrl),
-                                  context,
-                                ),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    return Image.network(
-                                      placeFuture.data!.imageUrl,
-                                    );
-                                  } else {
-                                    return CircularProgressIndicator();
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    if (showButton.value)
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green.shade500,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
-                          ),
-                        ),
-                        onPressed: () async {
-                          try {
-                            final answerLocation = await getCurrentPosition();
-                            final score = await calculateScore(
-                              placeFuture.data!.address,
-                              maxDistance,
-                              answerLocation,
-                            );
-                            context.go(
-                              './result',
-                              extra: (score, placeFuture.data),
-                            );
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Error: $e')),
-                            );
-                          }
-                        },
-                        child: const Text('回答'),
+                        ],
                       ),
-                  ],
+                      if (showButton.value)
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green.shade500,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                30.0,
+                              ), // 楕円形に設定
+                            ),
+                          ),
+                          onPressed: () async {
+                            try {
+                              final answerLocation = await getCurrentPosition();
+                              final score = await calculateScore(
+                                placeFuture.data!.address,
+                                maxDistance,
+                                answerLocation,
+                              );
+                              context.go(
+                                './result',
+                                extra: (score, placeFuture.data),
+                              );
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Error: $e')),
+                              );
+                            }
+                          },
+                          child: const Text('回答'),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             )

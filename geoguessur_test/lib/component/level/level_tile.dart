@@ -82,6 +82,7 @@ class _LevelTileState extends State<LevelTile> {
         ),
         onTap: () async {
           await _sePlayer.setAsset('assets/audio/se2.mp3');
+          _sePlayer.setVolume(1.0);
           await _sePlayer.play();
           context.go(widget.route);
         },

@@ -21,6 +21,7 @@ class _GuessrScreenState extends State<GuessrScreen> {
     "horizontal": 100.0,
     "vertical": 40.0,
   };
+
   @override
   void initState() {
     super.initState();
@@ -28,12 +29,14 @@ class _GuessrScreenState extends State<GuessrScreen> {
     _sePlayer = AudioPlayer();
     _audioPlayer.setLoopMode(LoopMode.one);
     _audioPlayer.setAsset('assets/audio/bgm2.mp3');
+    _audioPlayer.setVolume(0.3);
     _audioPlayer.play();
   }
 
   @override
   void dispose() {
     _audioPlayer.dispose();
+    _sePlayer.dispose();
     super.dispose();
   }
 
@@ -78,17 +81,20 @@ class _GuessrScreenState extends State<GuessrScreen> {
                   child: GestureDetector(
                     onTap: () async {
                       await _sePlayer.setAsset('assets/audio/se1.mp3');
+                      _sePlayer.setVolume(1.0); // 音量を最大に設定
                       await _sePlayer.play();
                       context.go('/guessr/level');
                     },
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/wood.png',
+                        SizedBox(
                           width: buttonSize["horizontal"]! * 1.5,
                           height: buttonSize["vertical"]! * 1.5,
-                          fit: BoxFit.cover,
+                          child: Image.asset(
+                            'assets/images/wood.png',
+                            fit: BoxFit.cover,
+                          ),
                         ),
                         const Text(
                           '開始',
