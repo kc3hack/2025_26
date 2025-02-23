@@ -7,16 +7,17 @@ class FirestoreService {
   // Create a new place
   Future<void> createPlace(Place place) async {
     await _firestore.collection('places').add({
-      'id': place.id,
+      'id': place.id ?? 0,
       'name': place.name,
       'address': place.address,
-      'category': place.category.toString().split('.').last,
+      'category': place.category.toString().split('.').last ?? 3,
+      'description': place.description ?? '',
       'popularity': place.popularity,
       'year': place.year,
       'imageUrl': place.imageUrl,
-      'eventName': place.eventName,
-      'eventDescription': place.eventDescription,
-      'eventImageUrl': place.eventImageUrl,
+      'eventName': place.eventName ?? '',
+      'eventDescription': place.eventDescription ?? '',
+      'eventImageUrl': place.eventImageUrl ?? '',
     });
   }
 

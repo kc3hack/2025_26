@@ -16,7 +16,8 @@ class Place {
     this.imageUrl = 'assets/images/default.jpg',
     this.eventName = '',
     this.eventDescription = '',
-    this.eventImageUrl = 'assets/images/default.jpg',
+    this.eventImageUrl = '',
+    this.description = '',
   });
 
   /*
@@ -41,6 +42,7 @@ class Place {
   String eventName;
   String eventDescription;
   String eventImageUrl;
+  String description;
 
   String get getEra {
     if (year < 250) return '原始';
