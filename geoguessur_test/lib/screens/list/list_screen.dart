@@ -4,6 +4,7 @@ import 'package:geoguessur_test/component/button/keyword_search.dart';
 import 'package:geoguessur_test/interface/place.dart';
 import 'package:geoguessur_test/service/database/firestore_service.dart';
 import 'package:go_router/go_router.dart';
+import 'package:geoguessur_test/component/header/header.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -194,6 +195,6 @@ class _ListScreenState extends State<ListScreen> {
           ),
         ],
       ),
-    );
-  }
+      );
+    }
 }
