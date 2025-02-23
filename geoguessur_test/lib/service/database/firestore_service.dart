@@ -7,7 +7,6 @@ class FirestoreService {
   // Create a new place
   Future<void> createPlace(Place place) async {
     await _firestore.collection('places').add({
-      'id': place.id,
       'name': place.name,
       'address': place.address,
       'category': place.category.toString().split('.').last,

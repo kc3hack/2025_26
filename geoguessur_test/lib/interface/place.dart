@@ -7,7 +7,7 @@ enum Category {
 
 class Place {
   Place({
-    required this.id,
+    this.id,
     required this.name,
     required this.address,
     required this.category,
@@ -17,6 +17,7 @@ class Place {
     this.eventName = '',
     this.eventDescription = '',
     this.eventImageUrl = 'assets/images/default.jpg',
+    this.description = '',
   });
 
   /*
@@ -31,7 +32,7 @@ class Place {
   */
 
   //途中
-  int id;
+  int? id;
   String name;
   String address;
   Category category;
@@ -41,6 +42,7 @@ class Place {
   String eventName;
   String eventDescription;
   String eventImageUrl;
+  String description;
 
   String get getAll {
     return "$name,$address,${(() {
