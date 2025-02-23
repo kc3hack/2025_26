@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:geoguessur_test/component/header/header.dart';
 
 class GuessrScreen extends StatelessWidget {
   const GuessrScreen({super.key});
@@ -12,10 +13,13 @@ class GuessrScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('guessr')),
-      body: Stack(
-        children: <Widget>[
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar:Header(),
+          body: Stack(
+          children: <Widget>[
           Positioned.fill(
             child: Image.asset(
               "assets/images/guessur_thumbnail.JPG",
@@ -72,6 +76,8 @@ class GuessrScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      ),
       ),
     );
   }

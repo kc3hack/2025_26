@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:envied/envied.dart';
 import 'package:geoguessur_test/env.dart';
+import 'package:geoguessur_test/component/header/header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -64,22 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: GestureDetector(
-            onTap: () {
-              context.go('/debug');
-            },
-            child: const Text('Maps Sample App'),
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: Header(),
+          body: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
+            markers: _markers,
           ),
-          backgroundColor: Colors.green[700],
-        ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
-          markers: _markers,
         ),
       ),
     );
   }
 }
+
