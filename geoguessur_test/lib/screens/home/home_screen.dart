@@ -40,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     for (var place in places) {
       var tmp = place.address;
-      print(tmp);
       var url =
           "https://maps.googleapis.com/maps/api/place/textsearch/json"
           "?query=${Uri.encodeComponent(tmp)}"
@@ -51,17 +50,18 @@ class _HomeScreenState extends State<HomeScreen> {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final List places = data['results'];
+        final List places2 = data['results'];
 
         setState(() {
           _markers.addAll(
-              places.map((place) {
-                final lat = place['geometry']['location']['lat'];
-                final lng = place['geometry']['location']['lng'];
+              places2.map((place2) {
+                final lat = place2['geometry']['location']['lat'];
+                final lng = place2['geometry']['location']['lng'];
                 return Marker(
-                  markerId: MarkerId(place['name']),
+                  markerId: MarkerId(place.id.toString()),
                   position: LatLng(lat, lng),
-                  infoWindow: InfoWindow(title: place['name']),
+                  infoWindow: InfoWindow(title: place.name),
+                  onTap: () => print(place.name),
                 );
               }).toSet());
         });
