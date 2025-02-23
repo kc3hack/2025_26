@@ -78,7 +78,7 @@ class QuizScreen extends HookWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Image.asset(placeFuture.data!.imageUrl),
+                              Image.network(placeFuture.data!.imageUrl),
                             ],
                           ),
                         ),
