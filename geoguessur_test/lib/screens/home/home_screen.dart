@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:geoguessur_test/env.dart';
 import 'package:geoguessur_test/component/header/header.dart';
+import 'package:just_audio/just_audio.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,9 +17,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(34.881563, 135.347433);
+  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setLoopMode(LoopMode.one);
+    _audioPlayer.setAsset('assets/audio/bgm1.mp3');
+    _audioPlayer.play();
     super.initState();
     _fetchPlaces();
   }
@@ -77,4 +83,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
