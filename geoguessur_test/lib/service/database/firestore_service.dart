@@ -32,6 +32,7 @@ class FirestoreService {
         category: Category.values.firstWhere(
           (e) => e.toString() == 'Category.${doc['category']}',
         ),
+        description: doc['description'],
         popularity: doc['popularity'],
         year: doc['year'],
         imageUrl: doc['imageUrl'],
@@ -49,6 +50,7 @@ class FirestoreService {
       'name': place.name,
       'address': place.address,
       'category': place.category.toString().split('.').last,
+      'description': place.description,
       'popularity': place.popularity,
       'year': place.year,
       'imageUrl': place.imageUrl,
@@ -82,6 +84,7 @@ class FirestoreService {
         category: Category.values.firstWhere(
           (e) => e.toString() == 'Category.${doc['category']}',
         ),
+        description: doc['description'],
         popularity: doc['popularity'],
         year: doc['year'],
         imageUrl: doc['imageUrl'],
