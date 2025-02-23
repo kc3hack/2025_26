@@ -164,7 +164,7 @@ class _ListScreenState extends State<ListScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     print(eventData[index].name);
-                                    //context.push('/detail', extra: );  //詳細情報へ
+                                    context.push('/detail', extra: eventData[index]);  //詳細情報へ
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
