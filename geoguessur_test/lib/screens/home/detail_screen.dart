@@ -8,7 +8,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Detail")),
+      appBar: AppBar(title: const Text("詳細情報")),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class DetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('説明:', style: TextStyle(fontSize: 16)),
-                  Text('  ', style: TextStyle(fontSize: 15)),
+                  Text('  ${place.description}', style: TextStyle(fontSize: 15)),
                 ],
               ),
             ),
