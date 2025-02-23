@@ -66,44 +66,12 @@ class DetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('アクセス:', style: TextStyle(fontSize: 16)),
-                  Text('  最寄駅〇〇から〇分', style: TextStyle(fontSize: 15)),
-                ],
-              ),
-            ),
-            Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
                   Text('説明:', style: TextStyle(fontSize: 16)),
                   Text('  ', style: TextStyle(fontSize: 15)),
                 ],
               ),
             ),
             Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('豆知識:', style: TextStyle(fontSize: 16)),
-                  Text('  ', style: TextStyle(fontSize: 15)),
-                ],
-              ),
-            ),
-            Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('公式ホームページ:', style: TextStyle(fontSize: 16)),
-                  Text('  ', style: TextStyle(fontSize: 15)),
-                ],
-              ),
-            ),
           ],
         ),
       ),

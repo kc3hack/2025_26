@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:geoguessur_test/component/button/keyword_search.dart';
 import 'package:geoguessur_test/interface/place.dart';
 import 'package:geoguessur_test/service/database/firestore_service.dart';
+import 'package:go_router/go_router.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -32,13 +33,23 @@ class _ListScreenState extends State<ListScreen> {
     List<Place> sortedPlaces = places;
     switch (sortBy) {
       case SortBy.id:
-        sortedPlaces.sort((a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id));
+        sortedPlaces.sort(
+          (a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id),
+        );
         return sortedPlaces;
-      case SortBy.name:
-        sortedPlaces.sort((a, b) => sortUp ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      case SortBy.year:
+        sortedPlaces.sort(
+          (a, b) =>
+              sortUp ? a.year.compareTo(b.year) : b.year.compareTo(a.year),
+        );
         return sortedPlaces;
       case SortBy.popularity:
-        sortedPlaces.sort((a, b) => sortUp ? b.popularity.compareTo(a.popularity) : a.popularity.compareTo(b.popularity));
+        sortedPlaces.sort(
+          (a, b) =>
+              sortUp
+                  ? a.popularity.compareTo(b.popularity)
+                  : b.popularity.compareTo(a.popularity),
+        );
         return sortedPlaces;
     }
   }
@@ -47,7 +58,7 @@ class _ListScreenState extends State<ListScreen> {
   void initState() {
     super.initState();
     _fetchPlaces();
-    }
+  }
 
   Future<void> _fetchPlaces() async {
     List<Place> fetchedPlaces = await _firestoreService.getAllPlaces();
@@ -74,7 +85,12 @@ class _ListScreenState extends State<ListScreen> {
               Divider(height: 30),
               Text('イベント一覧', style: TextStyle(fontSize: 18)),
               Divider(height: 30), //仮
-              eventData.isEmpty ? Text('イベント情報など\n続報をお楽しみにお待ちください', textAlign: TextAlign.center) : SizedBox(),
+              eventData.isEmpty
+                  ? Text(
+                    'イベント情報など\n続報をお楽しみにお待ちください',
+                    textAlign: TextAlign.center,
+                  )
+                  : SizedBox(),
               Expanded(
                 child: ListView.builder(
                   itemCount: eventData.length,
@@ -102,8 +118,34 @@ class _ListScreenState extends State<ListScreen> {
                               SizedBox(
                                 height: 200, // 高さを固定
                                 child: Image.network(
-                                  'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYBgOvqjTc8PUtCpUDcdvBo8qlOlLyyNTDKnZa6soYE79R2M45afo37bITHXjY-vPSYet_9Zs7RmzEDp2u3YR_Xc7BOEfsm17dmX43vYXQukOr1aVWhRpuFoInSQslOMyuFhCA4TRNKJ4E/s800/dondoyaki_yaku.png',
+                                  eventData[index].eventImageUrl,
                                   fit: BoxFit.contain, // アスペクト比を維持して表示
+                                  loadingBuilder: (
+                                    BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress,
+                                  ) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return Center(
+                                        child: Text('イメージを読み込み中...'),
+                                      );
+                                    }
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.error, color: Colors.red),
+                                        Text(
+                                          'イメージが存在しません',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 ),
                               ),
                               // 説明
@@ -119,7 +161,7 @@ class _ListScreenState extends State<ListScreen> {
                               GestureDetector(
                                 onTap: () {
                                   print(eventData[index].name);
-                                  //context.push('')  詳細情報へ
+                                  //context.push('/detail', extra: );  //詳細情報へ
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -148,7 +190,7 @@ class _ListScreenState extends State<ListScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
-            child: KeyWordSearch(onSort: onSort, sortBy: sortBy,),
+            child: KeyWordSearch(onSort: onSort, sortBy: sortBy),
           ),
         ],
       ),

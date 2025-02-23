@@ -36,7 +36,7 @@ class Place {
   String address;
   Category category;
   int popularity;
-  String year;
+  int year;
   String imageUrl;
   String eventName;
   String eventDescription;
@@ -54,6 +54,6 @@ class Place {
         case Category.tomb:
           return '古墳';
       }
-    })()},$year";
+    })()},${year.toString()}";
   }
 }

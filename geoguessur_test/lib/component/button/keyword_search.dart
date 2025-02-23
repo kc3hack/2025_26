@@ -102,7 +102,7 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
                             );
                           },
                         );
-                        widget.onSort(widget.sortBy,true);
+                        widget.onSort(widget.sortBy,false);
                       },
                       icon: Icon(Icons.sort),
                     ),
@@ -159,11 +159,11 @@ class SortListSheet extends StatefulWidget {
   State<SortListSheet> createState() => _SortListSheetState();
 }
 
-enum SortBy { id, name, popularity }
+enum SortBy { id, year, popularity }
 
 class _SortListSheetState extends State<SortListSheet> {
   SortBy _sortBy = SortBy.id;
-  bool sortUp = true; //昇順:降順
+  bool sortUp = false; //昇順:降順
 
   @override
   void initState() {
@@ -238,8 +238,8 @@ class _SortListSheetState extends State<SortListSheet> {
                 },
               ),
               RadioListTile(
-                title: Text('名前順'),
-                value: SortBy.name,
+                title: Text('年代順'),
+                value: SortBy.year,
                 groupValue: _sortBy,
                 onChanged: (value) {
                   setState(() {

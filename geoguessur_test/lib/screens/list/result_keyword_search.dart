@@ -41,11 +41,11 @@ class _ResultKeywordSearchState extends State<ResultKeywordSearch> {
       case SortBy.id:
         sortedPlaces.sort((a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id));
         return sortedPlaces;
-      case SortBy.name:
-        sortedPlaces.sort((a, b) => sortUp ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+      case SortBy.year:
+        sortedPlaces.sort((a, b) => sortUp ? a.year.compareTo(b.year) : b.year.compareTo(a.year));
         return sortedPlaces;
       case SortBy.popularity:
-        sortedPlaces.sort((a, b) => sortUp ? b.popularity.compareTo(a.popularity) : a.popularity.compareTo(b.popularity));
+        sortedPlaces.sort((a, b) => sortUp ? a.popularity.compareTo(b.popularity) : b.popularity.compareTo(a.popularity));
         return sortedPlaces;
     }
   }
