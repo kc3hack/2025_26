@@ -8,7 +8,7 @@ class DevelopCreat {
 
   Future<void> savePlacesToFirestore() async {
     // 既存のデータを全消去
-    await _firestoreService.deleteAllPlaces();
+    // await _firestoreService.deleteAllPlaces();
 
     final places = [
       Place(
@@ -32,6 +32,7 @@ class DevelopCreat {
         year: 593,
         imageUrl:
             'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/shitennouji.jpg?alt=media&token=d5112e91-3ec4-4078-a54b-46bc01386452',
+        description: '本尊は阿弥陀如来。四天王寺は、大阪市内で最も古い寺院の一つです。',
       ),
       Place(
         id: 3,
@@ -42,6 +43,7 @@ class DevelopCreat {
         year: 710,
         imageUrl:
             'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/heizei.jpg?alt=media&token=8c838412-3ae2-4845-8cda-98568730eb69',
+        description: '',
       ),
       Place(
         id: 4,
@@ -52,6 +54,7 @@ class DevelopCreat {
         year: 500,
         imageUrl:
             'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/daizennkohunn.jpg?alt=media&token=5a9dba20-84ea-4788-93f8-96bbd85537c1',
+        description: '',
       ),
       Place(
         id: 5,
@@ -90,7 +93,7 @@ class DevelopCreat {
         popularity: 5,
         year: 1397,
         imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/kinkakuji.jpg?alt=media&token=abc123',
+            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/azumadera.jpg?alt=media&token=47e386b9-0362-45b4-89c3-cd58369b9e6e',
         description: '金閣寺は京都市北区にある寺院で、1397年に創建されました。',
       ),
       Place(
@@ -100,8 +103,7 @@ class DevelopCreat {
         category: Category.temple,
         popularity: 4,
         year: 1482,
-        imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/ginkakuji.jpg?alt=media&token=def456',
+        imageUrl: '',
         description: '銀閣寺は京都市左京区にある寺院で、1482年に創建されました。',
       ),
       Place(
@@ -111,8 +113,7 @@ class DevelopCreat {
         category: Category.shrine,
         popularity: 5,
         year: 768,
-        imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/kasugataisha.jpg?alt=media&token=ghi789',
+        imageUrl: '',
         description: '春日大社は奈良市にある神社で、768年に創建されました。',
       ),
 
@@ -123,8 +124,7 @@ class DevelopCreat {
         category: Category.shrine,
         popularity: 4,
         year: -33,
-        imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/kumanohongu.jpg?alt=media&token=pqr678',
+        imageUrl: '',
         description: '熊野本宮大社は和歌山県田辺市にある神社で、紀元前に創建されました。',
       ),
 
@@ -135,8 +135,7 @@ class DevelopCreat {
         category: Category.temple,
         popularity: 5,
         year: 778,
-        imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/kiyomizudera.jpg?alt=media&token=yz1234',
+        imageUrl: '',
         description: '清水寺は京都市東山区にある寺院で、778年に創建されました。',
       ),
       Place(
@@ -158,7 +157,7 @@ class DevelopCreat {
         popularity: 4,
         year: 796,
         imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/toji.jpg?alt=media&token=efg890',
+            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/azumadera.jpg?alt=media&token=47e386b9-0362-45b4-89c3-cd58369b9e6e',
         description: '東寺は京都市南区にある寺院で、796年に創建されました。',
       ),
       Place(
@@ -311,7 +310,7 @@ class DevelopCreat {
         popularity: 5,
         year: 1052,
         imageUrl:
-            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/byodoin.jpg?alt=media&token=example',
+            'https://firebasestorage.googleapis.com/v0/b/shrines-and-temples-app.firebasestorage.app/o/byoudouin.jpg?alt=media&token=5dfcb182-4558-4055-a392-baefbde0ed87',
         description:
             '宗派は17世紀以来天台宗と浄土宗を兼ね、現在は特定の宗派に属しておらず、塔頭である本山修験宗聖護院末寺の最勝院と浄土宗の浄土院が年交代制で共同管理している。 ',
       ),
