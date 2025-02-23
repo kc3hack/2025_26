@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:geoguessur_test/component/button/keyword_search.dart';
 import 'package:geoguessur_test/interface/place.dart';
-import 'package:geoguessur_test/screens/list/result_tag_search.dart';
+import 'package:geoguessur_test/service/database/firestore_service.dart';
+
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
 
@@ -11,10 +12,50 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  final FirestoreService _firestoreService = FirestoreService();
+  SortBy sortBy = SortBy.id;
+
+  List<Place> places = [];
+
   List<Place> get eventData =>
-      ResultTagSearch.places
-          .where((place) => place.eventDescription.isNotEmpty)
-          .toList();
+      places.where((place) => place.eventDescription.isNotEmpty).toList();
+
+  //ソート
+  void onSort(SortBy sortBy, bool sortUp) {
+    setState(() {
+      this.sortBy = sortBy;
+      places = sortPlaces(sortUp);
+    });
+  }
+
+  List<Place> sortPlaces(bool sortUp) {
+    List<Place> sortedPlaces = places;
+    switch (sortBy) {
+      case SortBy.id:
+        sortedPlaces.sort((a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id));
+        return sortedPlaces;
+      case SortBy.name:
+        sortedPlaces.sort((a, b) => sortUp ? a.name.compareTo(b.name) : b.name.compareTo(a.name));
+        return sortedPlaces;
+      case SortBy.popularity:
+        sortedPlaces.sort((a, b) => sortUp ? b.popularity.compareTo(a.popularity) : a.popularity.compareTo(b.popularity));
+        return sortedPlaces;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPlaces();
+    }
+
+  Future<void> _fetchPlaces() async {
+    List<Place> fetchedPlaces = await _firestoreService.getAllPlaces();
+    setState(() {
+      places = fetchedPlaces;
+    });
+    onSort(sortBy, true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +72,9 @@ class _ListScreenState extends State<ListScreen> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
               ),
               Divider(height: 30),
-              //Text('イベント情報など\n続報をお楽しみにお待ちください', textAlign: TextAlign.center),
               Text('イベント一覧', style: TextStyle(fontSize: 18)),
               Divider(height: 30), //仮
+              eventData.isEmpty ? Text('イベント情報など\n続報をお楽しみにお待ちください', textAlign: TextAlign.center) : SizedBox(),
               Expanded(
                 child: ListView.builder(
                   itemCount: eventData.length,
@@ -52,7 +93,7 @@ class _ListScreenState extends State<ListScreen> {
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  '${eventData[index].name}/${eventData[index].name}',
+                                  '${eventData[index].eventName}/${eventData[index].name}',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               ),
@@ -107,7 +148,7 @@ class _ListScreenState extends State<ListScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
-            child: KeyWordSearch(),
+            child: KeyWordSearch(onSort: onSort, sortBy: sortBy,),
           ),
         ],
       ),

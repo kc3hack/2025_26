@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:geoguessur_test/component/button/search_page.dart';
+import 'package:geoguessur_test/interface/place.dart';
 import 'package:go_router/go_router.dart';
 
 /*
@@ -11,7 +12,9 @@ import 'package:go_router/go_router.dart';
   ラジオボタン
 */
 class KeyWordSearch extends StatefulWidget {
-  const KeyWordSearch({super.key});
+  const KeyWordSearch({super.key, required this.onSort, required this.sortBy});
+  final Function(SortBy, bool) onSort;
+  final SortBy sortBy;
 
   @override
   _KeyWordSearchState createState() => _KeyWordSearchState();
@@ -93,9 +96,13 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           builder: (BuildContext context) {
-                            return SortListSheet();
+                            return SortListSheet(
+                              onSort: widget.onSort,
+                              sortBy: widget.sortBy,
+                            );
                           },
                         );
+                        widget.onSort(widget.sortBy,true);
                       },
                       icon: Icon(Icons.sort),
                     ),
@@ -105,7 +112,7 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
               //タグ
               AnimatedContainer(
                 padding: EdgeInsets.symmetric(horizontal: 15),
-                duration: Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 550),
                 curve: Curves.easeInOutQuint,
                 height: isOpen ? MediaQuery.of(context).size.height * 0.67 : 0,
                 onEnd: () {
@@ -119,7 +126,7 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
                   }
                 },
                 child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 150),
+                  duration: const Duration(milliseconds: 130),
                   curve: Curves.easeOutQuad,
                   opacity: showContent ? 1 : 0,
                   child: SearchPage(
@@ -144,8 +151,9 @@ class _KeyWordSearchState extends State<KeyWordSearch> {
 
 // ラジオボタン
 class SortListSheet extends StatefulWidget {
-  const SortListSheet({super.key});
-  //final ValueChanged<SortBy> sortBy;
+  const SortListSheet({super.key, required this.onSort, required this.sortBy});
+  final Function(SortBy, bool) onSort;
+  final SortBy sortBy;
 
   @override
   State<SortListSheet> createState() => _SortListSheetState();
@@ -154,8 +162,14 @@ class SortListSheet extends StatefulWidget {
 enum SortBy { id, name, popularity }
 
 class _SortListSheetState extends State<SortListSheet> {
-  SortBy sortBy = SortBy.id;
+  SortBy _sortBy = SortBy.id;
   bool sortUp = true; //昇順:降順
+
+  @override
+  void initState() {
+    super.initState();
+    _sortBy = widget.sortBy;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,9 +185,7 @@ class _SortListSheetState extends State<SortListSheet> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('並び替え', style: TextStyle(fontSize: 23)),
-                  ],
+                  children: [Text('並び替え', style: TextStyle(fontSize: 23))],
                 ),
                 //Gap(10),
                 Row(
@@ -183,6 +195,7 @@ class _SortListSheetState extends State<SortListSheet> {
                       onTap: () {
                         setState(() {
                           sortUp = !sortUp;
+                          widget.onSort(widget.sortBy, sortUp);
                         });
                       },
                       child: Row(
@@ -216,30 +229,33 @@ class _SortListSheetState extends State<SortListSheet> {
               RadioListTile(
                 title: Text('デフォルト'),
                 value: SortBy.id,
-                groupValue: sortBy,
+                groupValue: _sortBy,
                 onChanged: (value) {
                   setState(() {
-                    sortBy = value!;
+                    widget.onSort(value!, sortUp);
+                    _sortBy = value;
                   });
                 },
               ),
               RadioListTile(
                 title: Text('名前順'),
                 value: SortBy.name,
-                groupValue: sortBy,
+                groupValue: _sortBy,
                 onChanged: (value) {
                   setState(() {
-                    sortBy = value!;
+                    widget.onSort(value!, sortUp);
+                    _sortBy = value;
                   });
                 },
               ),
               RadioListTile(
                 title: Text('知名度順'),
                 value: SortBy.popularity,
-                groupValue: sortBy,
+                groupValue: _sortBy,
                 onChanged: (value) {
                   setState(() {
-                    sortBy = value!;
+                    widget.onSort(value!, sortUp);
+                    _sortBy = value;
                   });
                 },
               ),

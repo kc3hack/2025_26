@@ -17,7 +17,7 @@ class SearchResultList extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                print(resultPlaces.elementAt(index).name);
+                print(resultPlaces.elementAt(index).popularity);
                 //context.push(''); 詳細情報へ
               },
               child: Container(
