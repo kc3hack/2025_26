@@ -67,7 +67,7 @@ class _ResultKeywordSearchState extends State<ResultKeywordSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('ヘッダー')),
+      appBar: AppBar(title: Text('キーワード検索結果')),
       body: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [

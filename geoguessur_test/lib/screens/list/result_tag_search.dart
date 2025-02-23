@@ -133,7 +133,7 @@ class _ResultTagSearchState extends State<ResultTagSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('ヘッダー')),
+      appBar: AppBar(title: Text('タグ検索結果')),
       body: Stack(
         alignment: AlignmentDirectional.topCenter,
         children: [

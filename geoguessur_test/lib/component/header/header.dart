@@ -19,7 +19,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               break;
           }
         },
-        tabs: [Tab(text: "Main"), Tab(text: "List"), Tab(text: "Guessr")],
+        tabs: [Tab(text: "Main"), Tab(text: "Info"), Tab(text: "Guessr")],
       ),
     );
   }
