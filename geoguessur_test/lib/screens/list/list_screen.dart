@@ -143,7 +143,7 @@ class _ListScreenState extends State<ListScreen> {
                                         children: [
                                           Icon(Icons.error, color: Colors.red),
                                           Text(
-                                            'イメージが存在しません',
+                                            'イメージがありません',
                                             style: TextStyle(color: Colors.red),
                                           ),
                                         ],
