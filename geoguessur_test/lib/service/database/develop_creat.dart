@@ -7,9 +7,6 @@ class DevelopCreat {
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
   Future<void> savePlacesToFirestore() async {
-    // 既存のデータを全消去
-    // await _firestoreService.deleteAllPlaces();
-
     final places = [
       Place(
         id: 1,
