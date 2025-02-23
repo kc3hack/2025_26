@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geoguessur_test/interface/place.dart';
 import 'package:go_router/go_router.dart';
 
 class DebugScreen extends StatelessWidget {
