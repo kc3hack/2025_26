@@ -7,7 +7,7 @@ enum Category {
 
 class Place {
   Place({
-    this.id,
+    required this.id,
     required this.name,
     required this.address,
     required this.category,
@@ -32,7 +32,7 @@ class Place {
   */
 
   //途中
-  int? id;
+  int id;
   String name;
   String address;
   Category category;
