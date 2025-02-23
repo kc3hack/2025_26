@@ -22,7 +22,7 @@ final router = GoRouter(
         GoRoute(
           name: 'detail',
           path: '/detail',
-          builder: (context, state) => DetailScreen(place: state.extra as Place),
+          builder: (context, state) => DetailScreen(place: state.extra as dynamic),
         ),
       ],
       builder: (context, state) => const HomeScreen(),
