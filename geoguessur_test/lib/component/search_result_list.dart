@@ -10,36 +10,38 @@ class SearchResultList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: resultPlaces.length,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                print(resultPlaces.elementAt(index).year);
-                context.push('/detail', extra: resultPlaces.elementAt(index));
-              },
-              child: Container(
-                color: Colors.transparent,
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      resultPlaces.elementAt(index).name,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Icon(Icons.arrow_right),
-                  ],
+    return Expanded(
+      child: ListView.builder(
+        itemCount: resultPlaces.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  print(resultPlaces.elementAt(index).year);
+                  context.push('/detail', extra: resultPlaces.elementAt(index));
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        resultPlaces.elementAt(index).name,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Icon(Icons.arrow_right),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Divider(),
-          ],
-        );
-      },
+              Divider(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

@@ -71,130 +71,133 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('About')),
-      body: Stack(
-        alignment: AlignmentDirectional.topCenter,
-        children: [
-          Column(
-            children: [
-              Gap(75),
-              Text(
-                'Infomation',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-              ),
-              Divider(height: 30),
-              Text('イベント一覧', style: TextStyle(fontSize: 18)),
-              Divider(height: 30), //仮
-              eventData.isEmpty
-                  ? Text(
-                    'イベント情報など\n続報をお楽しみにお待ちください',
-                    textAlign: TextAlign.center,
-                  )
-                  : SizedBox(),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: eventData.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 30,
-                            vertical: 10,
-                          ),
-                          child: Column(
-                            children: [
-                              // イベント名/場所
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  '${eventData[index].eventName}/${eventData[index].name}',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ),
-                              // 画像
-                              Gap(12),
-                              SizedBox(
-                                height: 200, // 高さを固定
-                                child: Image.network(
-                                  eventData[index].eventImageUrl,
-                                  fit: BoxFit.contain, // アスペクト比を維持して表示
-                                  loadingBuilder: (
-                                    BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent? loadingProgress,
-                                  ) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return Center(
-                                        child: Text('イメージを読み込み中...'),
-                                      );
-                                    }
-                                  },
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.error, color: Colors.red),
-                                        Text(
-                                          'イメージが存在しません',
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ),
-                              // 説明
-                              Gap(5),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  eventData[index].eventDescription,
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ),
-                              //詳細ボタン
-                              GestureDetector(
-                                onTap: () {
-                                  print(eventData[index].name);
-                                  //context.push('/detail', extra: );  //詳細情報へ
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "詳細はこちら",
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                    Icon(Icons.arrow_right, size: 17),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Divider(),
-                      ],
-                    );
-                  },
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: Header(),
+        body: Stack(
+          alignment: AlignmentDirectional.topCenter,
+          children: [
+            Column(
+              children: [
+                Gap(75),
+                Text(
+                  'Infomation',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: KeyWordSearch(onSort: onSort, sortBy: sortBy),
-          ),
-        ],
-      ),
-      );
+                Divider(height: 30),
+                Text('イベント一覧', style: TextStyle(fontSize: 18)),
+                Divider(height: 30), //仮
+                eventData.isEmpty
+                    ? Text(
+                      'イベント情報など\n続報をお楽しみにお待ちください',
+                      textAlign: TextAlign.center,
+                    )
+                    : SizedBox(),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: eventData.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 30,
+                              vertical: 10,
+                            ),
+                            child: Column(
+                              children: [
+                                // イベント名/場所
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    '${eventData[index].eventName}/${eventData[index].name}',
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                                // 画像
+                                Gap(12),
+                                SizedBox(
+                                  height: 200, // 高さを固定
+                                  child: Image.network(
+                                    eventData[index].eventImageUrl,
+                                    fit: BoxFit.contain, // アスペクト比を維持して表示
+                                    loadingBuilder: (
+                                      BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress,
+                                    ) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return Center(
+                                          child: Text('イメージを読み込み中...'),
+                                        );
+                                      }
+                                    },
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.error, color: Colors.red),
+                                          Text(
+                                            'イメージが存在しません',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                                // 説明
+                                Gap(5),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    eventData[index].eventDescription,
+                                    style: TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                                //詳細ボタン
+                                GestureDetector(
+                                  onTap: () {
+                                    print(eventData[index].name);
+                                    //context.push('/detail', extra: );  //詳細情報へ
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "詳細はこちら",
+                                        style: TextStyle(
+                                          fontSize: 11,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                      Icon(Icons.arrow_right, size: 17),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: KeyWordSearch(onSort: onSort, sortBy: sortBy),
+            ),
+          ],
+        ),
+        ),
+    );
     }
 }
