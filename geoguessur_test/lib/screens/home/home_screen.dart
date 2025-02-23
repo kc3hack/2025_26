@@ -29,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchPlaces();
   }
 
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   Set<Marker> _markers = {};
   Future<void> _fetchPlaces() async {
     final String apiKey = Env.pass1; // 取得したAPIキー
