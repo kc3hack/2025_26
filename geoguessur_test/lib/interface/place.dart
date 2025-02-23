@@ -42,6 +42,15 @@ class Place {
   String eventDescription;
   String eventImageUrl;
 
+  String get getEra {
+    if (year < 250) return '原始';
+    if (year < 1185) return '古代';
+    if (year < 1603) return '中世';
+    if (year < 1868) return '近世';
+    if (year < 1955) return '近代';
+    return '現代';
+  }
+
   String get getAll {
     return "$name,$address,${(() {
       switch (category) {
@@ -54,6 +63,6 @@ class Place {
         case Category.tomb:
           return '古墳';
       }
-    })()},${year.toString()}";
+    })()},${year.toString()},$getEra";
   }
 }

@@ -59,7 +59,7 @@ class _ResultTagSearchState extends State<ResultTagSearch> {
             regionTags.isEmpty) &&
         (categoryTags.any((tag) => place.category == tag) ||
             categoryTags.isEmpty) &&
-        (eraTags.any((tag) => place.year.toString().contains(tag)) || eraTags.isEmpty),
+        (eraTags.any((tag) => place.getEra.contains(tag)) || eraTags.isEmpty),
   );
 
   //ソート
