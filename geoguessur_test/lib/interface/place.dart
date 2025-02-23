@@ -49,7 +49,7 @@ class Place {
     if (year < 1185) return '古代';
     if (year < 1603) return '中世';
     if (year < 1868) return '近世';
-    if (year < 1955) return '近代';
+    if (year < 1945) return '近代';
     return '現代';
   }
 
