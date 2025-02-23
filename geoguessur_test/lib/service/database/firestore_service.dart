@@ -11,6 +11,7 @@ class FirestoreService {
       'name': place.name,
       'address': place.address,
       'category': place.category.toString().split('.').last ?? 3,
+      'description': place.description ?? '',
       'popularity': place.popularity,
       'year': place.year,
       'imageUrl': place.imageUrl,
