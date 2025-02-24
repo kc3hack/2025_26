@@ -1,47 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:geoguessur_test/component/header/header.dart';
 import 'package:just_audio/just_audio.dart';
 
-class GuessrScreen extends StatefulWidget {
+class GuessrScreen extends HookWidget {
   const GuessrScreen({super.key});
 
   @override
-  _GuessrScreenState createState() => _GuessrScreenState();
-}
-
-class _GuessrScreenState extends State<GuessrScreen> {
-  late AudioPlayer _audioPlayer;
-  late AudioPlayer _sePlayer;
-  final imgLPosition = -0.3;
-
-  final buttonMargin = 150.0;
-
-  final Map<String, double> buttonSize = const {
-    "horizontal": 100.0,
-    "vertical": 40.0,
-  };
-
-  @override
-  void initState() {
-    super.initState();
-    _audioPlayer = AudioPlayer();
-    _sePlayer = AudioPlayer();
-    _audioPlayer.setLoopMode(LoopMode.one);
-    _audioPlayer.setAsset('assets/audio/bgm2.mp3');
-    _audioPlayer.setVolume(0.3);
-    _audioPlayer.play();
-  }
-
-  @override
-  void dispose() {
-    _audioPlayer.dispose();
-    _sePlayer.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final audioPlayer = useMemoized(() => AudioPlayer());
+    final sePlayer = useMemoized(() => AudioPlayer());
+    final imgLPosition = -0.3;
+    final buttonMargin = 150.0;
+
+    final Map<String, double> buttonSize = const {
+      "horizontal": 100.0,
+      "vertical": 40.0,
+    };
+
+    useEffect(() {
+      Future.microtask(() async {
+        await audioPlayer.setLoopMode(LoopMode.one);
+        await audioPlayer.setAsset('assets/audio/bgm2.mp3');
+        audioPlayer.setVolume(0.3);
+        await audioPlayer.play();
+      });
+
+      return () {
+        audioPlayer.dispose();
+        sePlayer.dispose();
+      };
+    }, [audioPlayer, sePlayer]);
+
     return MaterialApp(
       home: DefaultTabController(
         length: 3,
@@ -80,9 +71,9 @@ class _GuessrScreenState extends State<GuessrScreen> {
                   margin: EdgeInsets.only(bottom: buttonMargin),
                   child: GestureDetector(
                     onTap: () async {
-                      await _sePlayer.setAsset('assets/audio/se1.mp3');
-                      _sePlayer.setVolume(1.0); // 音量を最大に設定
-                      await _sePlayer.play();
+                      await sePlayer.setAsset('assets/audio/se1.mp3');
+                      sePlayer.setVolume(1.0); // 音量を最大に設定
+                      await sePlayer.play();
                       context.go('/guessr/level');
                     },
                     child: Stack(
