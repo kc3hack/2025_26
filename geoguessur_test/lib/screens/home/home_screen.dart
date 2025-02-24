@@ -136,8 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 top: 10,
                 left: 10,
                 right: 10,
-                child: Container(
-                  padding: EdgeInsets.all(8),
+                child: Expanded(
+                  //padding: EdgeInsets.all(8),
                   child: KeyWordSearch(onSort: onSort, sortBy: sortBy),
                 ),
               ),
