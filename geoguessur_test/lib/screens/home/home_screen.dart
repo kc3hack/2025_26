@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/interface/place.dart';
+import 'package:geoguessur_test/screens/home/detail_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:geoguessur_test/env.dart';
@@ -9,6 +10,7 @@ import 'package:geoguessur_test/component/header/header.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoguessur_test/service/database/firestore_service.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final LatLng _center = const LatLng(34.881563, 135.347433);
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _fetchPlaces(places);
   }
@@ -54,16 +56,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
         setState(() {
           _markers.addAll(
-              places2.map((place2) {
-                final lat = place2['geometry']['location']['lat'];
-                final lng = place2['geometry']['location']['lng'];
-                return Marker(
-                  markerId: MarkerId(place.id.toString()),
-                  position: LatLng(lat, lng),
-                  infoWindow: InfoWindow(title: place.name),
-                  onTap: () => print(place.name),
-                );
-              }).toSet());
+            places2.map((place2) {
+              final lat = place2['geometry']['location']['lat'];
+              final lng = place2['geometry']['location']['lng'];
+              return Marker(
+                markerId: MarkerId(place.id.toString()),
+                position: LatLng(lat, lng),
+                infoWindow: InfoWindow(
+                  title: place.name,
+                  snippet: 'ここをタップして詳細情報を見る',
+                  onTap: () => context.go('/detail', extra: place),
+                ),
+              );
+            }).toSet(),
+          );
         });
       }
       print("Response status: ${response.statusCode}");
