@@ -79,6 +79,7 @@ class QuizScreen extends HookWidget {
                                     color: Colors.white,
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'Tamanegi',
                                   ),
                                 ),
                                 FutureBuilder(

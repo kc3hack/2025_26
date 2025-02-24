@@ -25,7 +25,7 @@ class ResultScreen extends HookWidget {
     }, [animationController]);
 
     return Scaffold(
-      appBar: AppBar(title: Text("結果発表")),
+      appBar: AppBar(title: Text("result")),
       body: Stack(
         children: <Widget>[
           Positioned.fill(
@@ -57,6 +57,7 @@ class ResultScreen extends HookWidget {
                           color: Colors.white,
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Tamanegi',
                         ),
                       ),
                       AnimatedBuilder(
@@ -119,7 +120,10 @@ class ResultScreen extends HookWidget {
                       borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
                     ),
                   ),
-                  child: const Text('最初に戻る'),
+                  child: const Text(
+                    '最初に戻る',
+                    style: TextStyle(fontSize: 20, fontFamily: 'Tamanegi'),
+                  ),
                 ),
               ],
             ),

@@ -49,6 +49,7 @@ class _LevelTileState extends State<LevelTile> {
               color: Colors.white,
               fontSize: 30.0,
               fontWeight: FontWeight.bold,
+              fontFamily: 'Tamanegi',
             ),
           ),
         ),
