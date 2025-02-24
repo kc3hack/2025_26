@@ -189,7 +189,7 @@ class QuizScreen extends HookWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('説明'),
-                        content: Text('ここに説明を入力します。'),
+                        content: Text(placeFuture.data!.description),
                         actions: <Widget>[
                           TextButton(
                             child: Text('閉じる'),
