@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:just_audio/just_audio.dart';
 
-class LevelTile extends StatefulWidget {
+class LevelTile extends StatelessWidget {
   final String leadingText;
   final String levelTitle;
   final String levelSubtitle;
@@ -15,18 +14,6 @@ class LevelTile extends StatefulWidget {
     required this.levelSubtitle,
     required this.route,
   }) : super(key: key);
-
-  @override
-  _LevelTileState createState() => _LevelTileState();
-}
-
-class _LevelTileState extends State<LevelTile> {
-  late AudioPlayer _sePlayer;
-  @override
-  void initState() {
-    super.initState();
-    _sePlayer = AudioPlayer();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +30,12 @@ class _LevelTileState extends State<LevelTile> {
             ),
           ),
           child: Text(
-            widget.leadingText,
+            leadingText,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
               fontSize: 30.0,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Tamanegi',
             ),
           ),
         ),
@@ -61,11 +47,10 @@ class _LevelTileState extends State<LevelTile> {
             ),
           ),
           child: Text(
-            widget.levelTitle,
+            levelTitle,
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.0,
-              fontFamily: 'Tamanegi',
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -78,19 +63,12 @@ class _LevelTileState extends State<LevelTile> {
             ),
           ),
           child: Text(
-            widget.levelSubtitle,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18.0,
-              fontFamily: 'Tamanegi',
-            ),
+            levelSubtitle,
+            style: TextStyle(color: Colors.black, fontSize: 18.0),
           ),
         ),
-        onTap: () async {
-          await _sePlayer.setAsset('assets/audio/se2.mp3');
-          _sePlayer.setVolume(1.0);
-          await _sePlayer.play();
-          context.go(widget.route);
+        onTap: () {
+          context.go(route);
         },
       ),
     );
