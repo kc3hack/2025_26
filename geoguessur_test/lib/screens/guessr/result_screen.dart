@@ -69,6 +69,7 @@ class ResultScreen extends HookWidget {
                               color: Colors.white,
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Tamanegi',
                             ),
                           );
                         },
@@ -104,6 +105,7 @@ class ResultScreen extends HookWidget {
                           color: Colors.white,
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Tamanegi',
                         ),
                       ),
                     ],
@@ -111,7 +113,7 @@ class ResultScreen extends HookWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    context.go('/');
+                    context.go('/guessr');
                   },
                   child: Stack(
                     alignment: Alignment.center,

@@ -5,6 +5,7 @@ import 'package:geoguessur_test/interface/place.dart';
 import 'package:geoguessur_test/service/database/firestore_service.dart';
 import 'package:go_router/go_router.dart';
 import 'package:geoguessur_test/component/header/header.dart';
+import 'package:just_audio/just_audio.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -18,6 +19,7 @@ class _ListScreenState extends State<ListScreen> {
   SortBy sortBy = SortBy.id;
 
   List<Place> places = [];
+  late AudioPlayer _audioPlayer;
 
   List<Place> get eventData =>
       places.where((place) => place.eventDescription.isNotEmpty).toList();
@@ -57,8 +59,18 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   void initState() {
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setLoopMode(LoopMode.one);
+    _audioPlayer.setAsset('assets/audio/bgm1.mp3');
+    _audioPlayer.play();
     super.initState();
     _fetchPlaces();
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   Future<void> _fetchPlaces() async {
@@ -164,7 +176,10 @@ class _ListScreenState extends State<ListScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     print(eventData[index].name);
-                                    context.push('/detail', extra: eventData[index]);  //詳細情報へ
+                                    context.push(
+                                      '/detail',
+                                      extra: eventData[index],
+                                    ); //詳細情報へ
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -197,7 +212,7 @@ class _ListScreenState extends State<ListScreen> {
             ),
           ],
         ),
-        ),
+      ),
     );
-    }
+  }
 }
