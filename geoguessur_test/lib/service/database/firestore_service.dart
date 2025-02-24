@@ -7,16 +7,17 @@ class FirestoreService {
   // Create a new place
   Future<void> createPlace(Place place) async {
     await _firestore.collection('places').add({
-      'id': place.id,
+      'id': place.id ?? 0,
       'name': place.name,
       'address': place.address,
-      'category': place.category.toString().split('.').last,
+      'category': place.category.toString().split('.').last ?? 3,
+      'description': place.description ?? '',
       'popularity': place.popularity,
       'year': place.year,
       'imageUrl': place.imageUrl,
-      'eventName': place.eventName,
-      'eventDescription': place.eventDescription,
-      'eventImageUrl': place.eventImageUrl,
+      'eventName': place.eventName ?? '',
+      'eventDescription': place.eventDescription ?? '',
+      'eventImageUrl': place.eventImageUrl ?? '',
     });
   }
 
@@ -31,6 +32,7 @@ class FirestoreService {
         category: Category.values.firstWhere(
           (e) => e.toString() == 'Category.${doc['category']}',
         ),
+        description: doc['description'],
         popularity: doc['popularity'],
         year: doc['year'],
         imageUrl: doc['imageUrl'],
@@ -48,6 +50,7 @@ class FirestoreService {
       'name': place.name,
       'address': place.address,
       'category': place.category.toString().split('.').last,
+      'description': place.description,
       'popularity': place.popularity,
       'year': place.year,
       'imageUrl': place.imageUrl,
@@ -63,12 +66,12 @@ class FirestoreService {
   }
 
   // Delete all places
-  Future<void> deleteAllPlaces() async {
-    QuerySnapshot querySnapshot = await _firestore.collection('places').get();
-    for (DocumentSnapshot doc in querySnapshot.docs) {
-      await doc.reference.delete();
-    }
-  }
+  // Future<void> deleteAllPlaces() async {
+  //   QuerySnapshot querySnapshot = await _firestore.collection('places').get();
+  //   for (DocumentSnapshot doc in querySnapshot.docs) {
+  //     await doc.reference.delete();
+  //   }
+  // }
 
   // Get all places
   Future<List<Place>> getAllPlaces() async {
@@ -81,6 +84,7 @@ class FirestoreService {
         category: Category.values.firstWhere(
           (e) => e.toString() == 'Category.${doc['category']}',
         ),
+        description: doc['description'],
         popularity: doc['popularity'],
         year: doc['year'],
         imageUrl: doc['imageUrl'],

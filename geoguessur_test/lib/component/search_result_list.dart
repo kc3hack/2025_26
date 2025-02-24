@@ -1,6 +1,7 @@
 //リスト作成ウィジェット
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/interface/place.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchResultList extends StatelessWidget {
   const SearchResultList({super.key, required this.resultPlaces});
@@ -9,33 +10,38 @@ class SearchResultList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: resultPlaces.length,
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    resultPlaces.elementAt(index).name,
-                    style: TextStyle(fontSize: 16),
+    return Expanded(
+      child: ListView.builder(
+        itemCount: resultPlaces.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  print(resultPlaces.elementAt(index).year);
+                  context.push('/detail', extra: resultPlaces.elementAt(index));
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        resultPlaces.elementAt(index).name,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Icon(Icons.arrow_right),
+                    ],
                   ),
-                  IconButton(
-                    icon: Icon(Icons.arrow_right),
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                  ),
-                ],
+                ),
               ),
-            ),
-            Divider(),
-          ],
-        );
-      },
+              Divider(),
+            ],
+          );
+        },
+      ),
     );
   }
 }

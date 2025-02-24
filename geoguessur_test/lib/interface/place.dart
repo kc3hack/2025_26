@@ -16,7 +16,8 @@ class Place {
     this.imageUrl = 'assets/images/default.jpg',
     this.eventName = '',
     this.eventDescription = '',
-    this.eventImageUrl = 'assets/images/default.jpg',
+    this.eventImageUrl = '',
+    this.description = '',
   });
 
   /*
@@ -36,11 +37,21 @@ class Place {
   String address;
   Category category;
   int popularity;
-  String year;
+  int year;
   String imageUrl;
   String eventName;
   String eventDescription;
   String eventImageUrl;
+  String description;
+
+  String get getEra {
+    if (year < 250) return '原始';
+    if (year < 1185) return '古代';
+    if (year < 1603) return '中世';
+    if (year < 1868) return '近世';
+    if (year < 1945) return '近代';
+    return '現代';
+  }
 
   String get getAll {
     return "$name,$address,${(() {
@@ -54,6 +65,6 @@ class Place {
         case Category.tomb:
           return '古墳';
       }
-    })()},$year";
+    })()},${year.toString()},$getEra";
   }
 }
