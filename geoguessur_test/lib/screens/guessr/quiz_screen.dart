@@ -127,17 +127,8 @@ class QuizScreen extends HookWidget {
                         ],
                       ),
                       if (showButton.value)
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green.shade500,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                30.0,
-                              ), // 楕円形に設定
-                            ),
-                          ),
-                          onPressed: () async {
+                        GestureDetector(
+                          onTap: () async {
                             try {
                               await sePlayer.setAsset('assets/audio/se1.mp3');
                               sePlayer.setVolume(1.0); // 音量を最大に設定
@@ -158,7 +149,27 @@ class QuizScreen extends HookWidget {
                               );
                             }
                           },
-                          child: const Text('回答'),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              SizedBox(
+                                width: 150,
+                                height: 60,
+                                child: Image.asset(
+                                  'assets/images/wood.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const Text(
+                                '回答',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontFamily: 'Tamanegi',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),
@@ -171,16 +182,8 @@ class QuizScreen extends HookWidget {
             Positioned(
               top: 60,
               right: 20,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlue, // 背景色を水色に設定
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
-                  ),
-                ),
-                icon: Icon(Icons.info_outline, color: Colors.white),
-                label: Text('ヒント', style: TextStyle(color: Colors.white)),
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -199,6 +202,27 @@ class QuizScreen extends HookWidget {
                     },
                   );
                 },
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      height: 60,
+                      child: Image.asset(
+                        'assets/images/washi.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const Text(
+                      '助太刀',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: 'Tamanegi',
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
         ],

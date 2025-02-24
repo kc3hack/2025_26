@@ -109,20 +109,30 @@ class ResultScreen extends HookWidget {
                     ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
+                GestureDetector(
+                  onTap: () {
                     context.go('/');
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade500,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
-                    ),
-                  ),
-                  child: const Text(
-                    '最初に戻る',
-                    style: TextStyle(fontSize: 20, fontFamily: 'Tamanegi'),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 150,
+                        height: 60,
+                        child: Image.asset(
+                          'assets/images/wood.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        '最初に戻る',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Tamanegi',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
