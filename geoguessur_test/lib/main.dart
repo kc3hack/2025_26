@@ -6,9 +6,7 @@ import 'package:geoguessur_test/service/database/develop_creat.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // 一度だけデータを保存
-  // final developCreat = DevelopCreat();
-  // await developCreat.savePlacesToFirestore();
+
   runApp(const MyApp());
 }
 

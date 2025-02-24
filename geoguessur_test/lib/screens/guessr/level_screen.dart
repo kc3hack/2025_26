@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geoguessur_test/component/level/level_tile.dart';
-import 'package:go_router/go_router.dart';
 
 class LevelScreen extends StatelessWidget {
   const LevelScreen({super.key});
@@ -34,22 +33,22 @@ class LevelScreen extends StatelessWidget {
               children: [
                 LevelTile(
                   leadingText: '簡単',
-                  levelTitle: 'Level 1: 初級',
-                  levelSubtitle: '簡単なレベルのクイズです。',
+                  levelTitle: '初級',
+                  levelSubtitle: '有名なところから出題。',
                   route: '/guessr/level/1/quiz',
                 ),
                 const SizedBox(height: 20),
                 LevelTile(
-                  leadingText: '府県内',
-                  levelTitle: 'Level 2: 中級',
-                  levelSubtitle: '中級レベルのクイズです。',
+                  leadingText: '県内',
+                  levelTitle: '中級',
+                  levelSubtitle: '同じ府県内から出題',
                   route: '/guessr/level/2/quiz',
                 ),
                 const SizedBox(height: 20),
                 LevelTile(
                   leadingText: '近畿',
-                  levelTitle: 'Level 3: 上級',
-                  levelSubtitle: '難しいレベルのクイズです。',
+                  levelTitle: ' 上級',
+                  levelSubtitle: '近畿全般から出題',
                   route: '/guessr/level/3/quiz',
                 ),
               ],

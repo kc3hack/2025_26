@@ -11,6 +11,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geoguessur_test/service/database/firestore_service.dart';
 import 'package:go_router/go_router.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:geoguessur_test/component/button/keyword_search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,13 +24,57 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late GoogleMapController mapController;
   List<Place> places = [];
+  late AudioPlayer _audioPlayer;
 
   final LatLng _center = const LatLng(34.881563, 135.347433);
+  SortBy sortBy = SortBy.id;
 
   @override
   void initState() {
+    _audioPlayer = AudioPlayer();
+    _audioPlayer.setLoopMode(LoopMode.one);
+    _audioPlayer.setAsset('assets/audio/bgm1.mp3');
+    _audioPlayer.play();
     super.initState();
     _fetchPlaces(places);
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void onSort(SortBy sortBy, bool sortUp) {
+    setState(() {
+      this.sortBy = sortBy;
+      places = sortPlaces(sortUp);
+    });
+  }
+
+  List<Place> sortPlaces(bool sortUp) {
+    List<Place> sortedPlaces = places;
+    switch (sortBy) {
+      case SortBy.id:
+        sortedPlaces.sort(
+          (a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id),
+        );
+        return sortedPlaces;
+      case SortBy.year:
+        sortedPlaces.sort(
+          (a, b) =>
+              sortUp ? a.year.compareTo(b.year) : b.year.compareTo(a.year),
+        );
+        return sortedPlaces;
+      case SortBy.popularity:
+        sortedPlaces.sort(
+          (a, b) =>
+              sortUp
+                  ? a.popularity.compareTo(b.popularity)
+                  : b.popularity.compareTo(a.popularity),
+        );
+        return sortedPlaces;
+    }
   }
 
   Set<Marker> _markers = {};
@@ -82,16 +128,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: Header(),
-          body: GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
-            markers: _markers,
+          body: Stack(
+            children: [
+              GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 11.0,
+                ),
+                markers: _markers,
+              ),
+              Positioned(
+                top: 10,
+                left: 10,
+                right: 10,
+                child: Expanded(
+                  //padding: EdgeInsets.all(8),
+                  child: KeyWordSearch(onSort: onSort, sortBy: sortBy),
+                ),
+              ),
+            ],
           ),
         ),
       ),

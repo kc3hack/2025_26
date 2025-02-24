@@ -25,7 +25,7 @@ class ResultScreen extends HookWidget {
     }, [animationController]);
 
     return Scaffold(
-      appBar: AppBar(title: Text("quiz result")),
+      appBar: AppBar(title: Text("result")),
       body: Stack(
         children: <Widget>[
           Positioned.fill(
@@ -57,6 +57,7 @@ class ResultScreen extends HookWidget {
                           color: Colors.white,
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Tamanegi',
                         ),
                       ),
                       AnimatedBuilder(
@@ -68,35 +69,73 @@ class ResultScreen extends HookWidget {
                               color: Colors.white,
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Tamanegi',
                             ),
                           );
                         },
                       ),
                       SizedBox(height: 20.0),
-                      Image.network(place.imageUrl),
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final imageWidth = 400.0;
+                          final imageHeight = 300.0;
+                          final isOverflowing =
+                              imageWidth > constraints.maxWidth ||
+                              imageHeight > constraints.maxHeight;
+
+                          return SizedBox(
+                            width:
+                                isOverflowing
+                                    ? constraints.maxWidth
+                                    : imageWidth,
+                            height:
+                                isOverflowing
+                                    ? constraints.maxHeight
+                                    : imageHeight,
+                            child: Image.network(
+                              place.imageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                      ),
                       Text(
                         '番地: ${place.address}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Tamanegi',
                         ),
                       ),
                     ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.go('/');
+                GestureDetector(
+                  onTap: () {
+                    context.go('/guessr');
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade500,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0), // 楕円形に設定
-                    ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 150,
+                        height: 60,
+                        child: Image.asset(
+                          'assets/images/wood.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const Text(
+                        '最初に戻る',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Tamanegi',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
-                  child: const Text('最初に戻る'),
                 ),
               ],
             ),
