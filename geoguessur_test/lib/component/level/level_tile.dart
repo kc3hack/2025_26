@@ -64,6 +64,7 @@ class _LevelTileState extends State<LevelTile> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 24.0,
+              fontFamily: 'Tamanegi',
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -77,7 +78,11 @@ class _LevelTileState extends State<LevelTile> {
           ),
           child: Text(
             widget.levelSubtitle,
-            style: TextStyle(color: Colors.black, fontSize: 18.0),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18.0,
+              fontFamily: 'Tamanegi',
+            ),
           ),
         ),
         onTap: () async {

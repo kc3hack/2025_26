@@ -5,6 +5,7 @@ import 'package:geoguessur_test/utils/location_info/calc_score.dart';
 import 'package:geoguessur_test/utils/location_info/get_location_info.dart';
 import 'package:go_router/go_router.dart';
 import 'package:geoguessur_test/interface/place.dart';
+import 'package:just_audio/just_audio.dart';
 
 class QuizScreen extends HookWidget {
   const QuizScreen({super.key, required this.level});
@@ -22,6 +23,7 @@ class QuizScreen extends HookWidget {
     final placeData = useMemoized(() => _fetchPlace(geoService, level));
     final placeFuture = useFuture(placeData);
     final showButton = useState(false);
+    final sePlayer = useMemoized(() => AudioPlayer());
 
     useEffect(() {
       Future.delayed(const Duration(seconds: 2), () {
@@ -136,6 +138,9 @@ class QuizScreen extends HookWidget {
                           ),
                           onPressed: () async {
                             try {
+                              await sePlayer.setAsset('assets/audio/se1.mp3');
+                              sePlayer.setVolume(1.0); // 音量を最大に設定
+                              await sePlayer.play();
                               final answerLocation = await getCurrentPosition();
                               final score = await calculateScore(
                                 placeFuture.data!.address,

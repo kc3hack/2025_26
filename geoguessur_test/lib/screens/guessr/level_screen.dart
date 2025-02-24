@@ -34,14 +34,14 @@ class LevelScreen extends StatelessWidget {
                 LevelTile(
                   leadingText: '簡単',
                   levelTitle: '初級',
-                  levelSubtitle: '簡単なレベルのクイズです。',
+                  levelSubtitle: '有名なところから出題。',
                   route: '/guessr/level/1/quiz',
                 ),
                 const SizedBox(height: 20),
                 LevelTile(
                   leadingText: '府県内',
                   levelTitle: '中級',
-                  levelSubtitle: '中級レベルのクイズです。',
+                  levelSubtitle: '',
                   route: '/guessr/level/2/quiz',
                 ),
                 const SizedBox(height: 20),

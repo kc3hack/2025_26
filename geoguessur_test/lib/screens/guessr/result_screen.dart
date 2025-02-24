@@ -25,7 +25,7 @@ class ResultScreen extends HookWidget {
     }, [animationController]);
 
     return Scaffold(
-      appBar: AppBar(title: Text("quiz result")),
+      appBar: AppBar(title: Text("結果発表")),
       body: Stack(
         children: <Widget>[
           Positioned.fill(
