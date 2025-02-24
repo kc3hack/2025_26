@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:geoguessur_test/component/button/keyword_search.dart';
 import 'package:geoguessur_test/interface/place.dart';
 import 'package:geoguessur_test/screens/home/detail_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,12 +25,45 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Place> places = [];
 
   final LatLng _center = const LatLng(34.881563, 135.347433);
+  SortBy sortBy = SortBy.id;
 
   @override
   void initState() {
     super.initState();
     _fetchPlaces(places);
   }
+   void onSort(SortBy sortBy, bool sortUp) {
+    setState(() {
+      this.sortBy = sortBy;
+      places = sortPlaces(sortUp);
+    });
+  }
+
+  List<Place> sortPlaces(bool sortUp) {
+    List<Place> sortedPlaces = places;
+    switch (sortBy) {
+      case SortBy.id:
+        sortedPlaces.sort(
+          (a, b) => sortUp ? a.id.compareTo(b.id) : b.id.compareTo(a.id),
+        );
+        return sortedPlaces;
+      case SortBy.year:
+        sortedPlaces.sort(
+          (a, b) =>
+              sortUp ? a.year.compareTo(b.year) : b.year.compareTo(a.year),
+        );
+        return sortedPlaces;
+      case SortBy.popularity:
+        sortedPlaces.sort(
+          (a, b) =>
+              sortUp
+                  ? a.popularity.compareTo(b.popularity)
+                  : b.popularity.compareTo(a.popularity),
+        );
+        return sortedPlaces;
+    }
+  }
+
 
   Set<Marker> _markers = {};
 
@@ -88,10 +122,26 @@ class _HomeScreenState extends State<HomeScreen> {
         length: 3,
         child: Scaffold(
           appBar: Header(),
-          body: GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(target: _center, zoom: 11.0),
-            markers: _markers,
+          body: Stack(
+            children: [
+              GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 11.0,
+                ),
+                markers: _markers,
+              ),
+              Positioned(
+                top: 10,
+                left: 10,
+                right: 10,
+                child: Expanded(
+                  //padding: EdgeInsets.all(8),
+                  child: KeyWordSearch(onSort: onSort, sortBy: sortBy),
+                ),
+              ),
+            ],
           ),
         ),
       ),
