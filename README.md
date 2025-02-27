@@ -46,6 +46,7 @@ BGMやSEをつけました。上記のデザイン面で注力したポイント
 ## 使用技術
 Flutter
 Firebase
+GoogleMapAPI
 
 <!-- 使用技術を入力してください -->
 
