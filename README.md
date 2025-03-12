@@ -2,8 +2,8 @@
 
 <!-- プロダクト名に変更してください -->
 
-![HistoryWalker](../2025_26/readme_src/2025-02-24_11.54.59.png)
-![HistoryWalker](../2025_26/readme_src/2025-02-24_12.03.05.png)
+![HistoryWalker](./readme_src/2025-02-24_11.54.59.png)
+![HistoryWalker](./readme_src/2025-02-24_12.03.05.png)
 
 <!-- プロダクト名・イメージ画像を差し変えてください -->
 
